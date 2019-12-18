@@ -1,0 +1,43 @@
+<!-- Wrapper -->
+<div class="d-flex" id="wrapper" [ngClass]="{'sidebar-hidden':sidebar.hidden}">
+    <!-- Sidebar -->
+    <div class="fg-light bg-dark" id="sidebar-wrapper">
+        <div class="sidebar-heading">
+            {{ sidebar.heading }}
+        </div>
+        <ul class="list-group fa-ul">
+            <li class="list-group-item" *ngFor="let menuItem of sidebar.menuItems; let i = index"
+                (click)="navigate(i)" [ngClass]="{'active':sidebar.activeMenuItem == i }"><span class="fa-li">
+                    <i class="{{ menuItem.icon }}"></i></span>{{ menuItem.name }}</li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand navbar-light bg-light shadow-sm">
+            <button class="btn" id="menu-toggle" (click)="toggleSidebar()"><span
+                    class="navbar-toggler-icon"></span></button>
+            <ul class="navbar-nav ml-auto mt-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ loggedInUser.name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"><span class="fas fa-cog"></span>Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><span class="fas fa-sign-out-alt"></span>Log out</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
