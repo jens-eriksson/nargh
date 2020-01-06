@@ -1,0 +1,44 @@
+<div class="container" style="margin-top: 100px; max-width: 600px;">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col text-center">
+            NARGH Invest AB
+            <br><br>
+          </div>
+        </div>
+        <form>
+          <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="email" required>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <input type="password" class="form-control" (value)="pwd" placeholder="Password" name="pwd" [(ngModel)]="pwd" required>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <button type="submit" class="form-control btn btn-primary" (click)="signIn()">Logga in</button>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+        </form>
+        <div class="row" *ngIf="message">
+          <div class="col text-center">
+            <br>
+            <p class="text-danger" style="margin: 30px;">
+              {{ message }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

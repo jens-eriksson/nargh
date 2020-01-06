@@ -7,6 +7,11 @@ export const SIDEBAR = {
             name: 'Investments',
             icon: 'fas fa-chart-line',
             url: '/investments'
+        },
+        {
+            name: 'Users',
+            icon: 'fas fa-users',
+            url: '/users'
         }
     ]
 };

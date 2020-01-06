@@ -1,0 +1,15 @@
+<div class="header">
+  <button type="button" class="close pull-right" (click)="add()">
+    <span class="fas fa-plus"></span>
+  </button>
+</div>
+
+<div class="row">
+  <div class="col" *ngFor="let investment of investments">
+    <div class="card" (click)="edit(investment.id)"> 
+      <div class="card-body">
+        {{ investment.name }}
+      </div>
+    </div>
+  </div>
+</div>
