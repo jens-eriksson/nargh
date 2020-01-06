@@ -12,7 +12,6 @@ import { App } from './app';
 import { environment } from './../environments/environment';
 
 import { TruncatePipe } from './pipes/truncatepipe';
-import { ExtendedCurrencyPipe } from './pipes/currency';
 
 import { LayoutPage } from './layout/layout';
 import { InvestmentsPage } from './pages/investments/investments';
@@ -41,7 +40,6 @@ registerLocaleData(localeSv, 'sv');
     InvestmentsPage,
     UsersPage,
     TruncatePipe,
-    //ExtendedCurrencyPipe,
     EditUserModal,
     NewUserModal,
     NewInvestmentModal
