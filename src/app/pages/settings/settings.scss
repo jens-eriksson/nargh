@@ -1,0 +1,26 @@
+a {
+    color: black;
+}
+
+.nav-pills {
+    border: none;
+    text-transform: uppercase;
+}
+
+.nav-item {
+    border-bottom: lightgrey solid 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: black;
+    background-color: white;
+}
+
+.nav-item .active {
+    border-bottom: green solid 4px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: black;
+    background-color: white;
+}

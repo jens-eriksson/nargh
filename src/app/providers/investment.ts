@@ -13,7 +13,7 @@ export class InvestmentProvider {
     }
 
     public all(): Observable<IInvestment[]> {
-        return this.db.collection<IInvestment>(this.COLLECTION).valueChanges();
+        return this.db.collection<IInvestment>(this.COLLECTION, ref => ref.orderBy('name')).valueChanges();
     }
 
     public get(id: string): Observable<IInvestment> {

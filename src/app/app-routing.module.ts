@@ -1,4 +1,5 @@
-import { UsersPage } from './pages/users/users';
+import { CompaniesPage } from './pages/companies/companies';
+import { SettingsPage } from './pages/settings/settings';
 import { AccessGuardProvider } from './providers/access-guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -13,13 +14,23 @@ const routes: Routes = [
     canActivate: [AccessGuardProvider],
     children: [
       {
+        path: '',
+        redirectTo: 'investments',
+        pathMatch: 'full'
+      },
+      {
         path: 'investments',
         component: InvestmentsPage,
         canActivate: [AccessGuardProvider]
       },
       {
-        path: 'users',
-        component: UsersPage,
+        path: 'companies',
+        component: CompaniesPage,
+        canActivate: [AccessGuardProvider]
+      },
+      {
+        path: 'settings',
+        component: SettingsPage,
         canActivate: [AccessGuardProvider]
       }
     ]

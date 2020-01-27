@@ -1,15 +1,31 @@
-<div class="header">
-  <button type="button" class="close pull-right" (click)="add()">
-    <span class="fas fa-plus"></span>
-  </button>
-</div>
-
+<app-summary
+  *ngIf="this.investments"
+  [totalInvestment]="totalInvestment"
+  [equity]="equity"
+  [netIncomeInvestment]="netIncomeInvestment"
+  [netIncomeRental]="netIncomeRental"
+  [timespan]="timespan"
+  >
+</app-summary>
 <div class="row">
-  <div class="col" *ngFor="let investment of investments">
-    <div class="card" (click)="edit(investment.id)"> 
-      <div class="card-body">
-        {{ investment.name }}
-      </div>
-    </div>
+  <div class="col">
+    <button type="button" class="btn btn-primary mt-3" (click)="add()">
+      <span class="fas fa-plus"></span>
+      NEW PROJECT
+    </button>
+  </div>
+  <div class="col-auto m-0">
+
   </div>
 </div>
+<app-tiles [investments]="investments"></app-tiles>
+
+  <ng-template #confirm>
+    <div class="modal-body text-center">
+      <h4>Are you sure?</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success w-50" (click)="delete()">Yes</button>
+      <button type="button" class="btn btn-danger w-50" (click)="modalRef.hide()">No</button>
+    </div>
+  </ng-template>

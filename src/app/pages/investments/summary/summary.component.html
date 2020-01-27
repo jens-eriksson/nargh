@@ -1,0 +1,91 @@
+<div class="header">
+  <div class="row">
+    <div class="col m-0">
+      <h5>CAPITAL</h5>
+      <hr />
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Total Investment:</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>
+            {{ this.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Equtiy:</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>{{ this.equity | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div class="col m-0">
+      <h5>INVESTMENT DEALS</h5>
+      <hr />
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Net Income:</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>
+            {{
+              this.netIncomeInvestment | currency: "SEK":"symbol":"1.0-0":"sv"
+            }}
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Timespan (months):</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>{{ this.timespan }}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Net Income/month:</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>{{ this.netIncomeInvestment / this.timespan | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div class="col m-0">
+      <h5>RENTAL BUSINESS</h5>
+      <hr />
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Net Income:</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>
+            {{ this.netIncomeRental | currency: "SEK":"symbol":"1.0-0":"sv" }}
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Timespan:</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>yearly</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5 class="mt-1">Net Income/month:</h5>
+        </div>
+        <div class="co text-right mr-3">
+          <h5>{{ this.netIncomeRental / 12 | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

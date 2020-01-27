@@ -1,4 +1,4 @@
-  $sidebar-width: 17rem;
+  $sidebar-width: 15rem;
   $header-height: 57px;
 
   #wrapper {
@@ -31,10 +31,8 @@
     .list-group {
         margin-top:10px;
         border: 0px;
-
         .list-group-item {
-            background-color: #343a40!important;
-            color: #f8f9fa!important;
+            color: #888888!important;
             border: 0px;
             border-radius: 0px;
             font-size: 1.2rem;
@@ -42,16 +40,18 @@
 
             .fa-li {
               padding-top: 12px;
+              padding-left: 20px;
               padding-bottom: 12px;
               margin-top: -12px;
+              margin-left: 4px;
             }
         }
         .active {
-            background-color: #f8f9fa!important;
-            color: #343a40!important;
+          color: #f8f9fa!important;
             .fa-li {
-              background-color: #f8f9fa!important;
-              color: #343a40!important;
+              border-left: solid 5px;
+              margin-left: -1px;
+              color: #f8f9fa!important;
             }
         }
     }
@@ -62,14 +62,21 @@
     }
     
   }
- 
+  
+  .bottom {
+    color: #f8f9fa!important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
   #page-content-wrapper {
     min-width: 100vw;
   }
   
   #wrapper.sidebar-hidden {
     #sidebar-wrapper {
-      margin-left: -$sidebar-width;;
+      margin-left: - $sidebar-width;;
     }
     #page-content-wrapper {
       margin-left: 0px;
@@ -83,7 +90,7 @@
   
     #page-content-wrapper {
       margin-left: $sidebar-width;
-      min-width: calc(100vw - 17rem);
+      min-width: calc(100vw - 15rem);
     }
   
     #wrapper.sidebar-hidden #page-content-wrapper {

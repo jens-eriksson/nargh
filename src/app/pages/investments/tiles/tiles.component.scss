@@ -1,0 +1,21 @@
+
+.project { 
+    margin-top: 20px;;
+    margin-right: 5px;
+    width: 550px;
+    height: 460px;
+}
+
+.project .card-header {
+    cursor: pointer;
+}
+
+.card-header {
+    padding: 15px;
+    text-transform: uppercase;
+    height: 60px;
+}
+
+.card-body {
+    padding: 15px;
+}

@@ -1,8 +1,8 @@
-import { EditUserModal } from './../../modal/edit-user/edit-user';
-import { NewUserModal } from './../../modal/new-user/new-user';
+import { EditUserModal } from '../../../modal/user/edit-user/edit-user';
+import { NewUserModal } from '../../../modal/user/new-user/new-user';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { UserProfile } from './../../model/user-profile';
-import { UserProfileProvider } from './../../providers/user-profile';
+import { UserProfile } from '../../../model/user-profile';
+import { UserProfileProvider } from '../../../providers/user-profile';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

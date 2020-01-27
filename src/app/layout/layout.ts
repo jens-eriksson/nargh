@@ -1,4 +1,4 @@
-import { EditUserModal } from './../modal/edit-user/edit-user';
+import { EditUserModal } from '../modal/user/edit-user/edit-user';
 import { UserProfileProvider } from './../providers/user-profile';
 import { UserProfile } from './../model/user-profile';
 import { AuthenticationProvider } from '../providers/authentication';
@@ -17,6 +17,7 @@ export class LayoutPage implements OnInit {
   mobileView = false;
   userProfile: UserProfile;
   sidebar = SIDEBAR;
+  activeUrl: string;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -44,15 +45,17 @@ export class LayoutPage implements OnInit {
           this.mobileView = true;
         }
       });
+    this.activeUrl = this.router.url;
   }
 
   toggleSidebar() {
     this.sidebar.hidden = !this.sidebar.hidden;
   }
 
-  navigate(index) {
-    this.sidebar.activeMenuItem = index;
-    this.router.navigateByUrl(this.sidebar.menuItems[index].url);
+  navigate(url) {
+    this.activeUrl = url;
+    console.log(url);
+    this.router.navigateByUrl(url);
     if (this.mobileView) {
       this.sidebar.hidden = true;
     }

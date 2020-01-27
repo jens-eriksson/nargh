@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col">
+    <button type="button" class="btn btn-primary mt-3" (click)="add()">
+      <span class="fas fa-plus"></span>
+      NEW USER
+    </button>
+  </div>
+  <div class="col-auto m-0">
+
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <br>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>email</th>
+          <th>Phone</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userProfile of userProfiles" (click)="edit(userProfile.uid)">
+          <td>{{ userProfile.displayName }}</td>
+          <td>{{ userProfile.email }}</td>
+          <td>{{ userProfile.phone }}</td>
+          <td>{{ userProfile.role }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

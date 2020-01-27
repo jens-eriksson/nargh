@@ -1,0 +1,60 @@
+a {
+    color: black;
+}
+
+label {
+    white-space: nowrap;
+}
+
+.nav-pills {
+    border: none;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.nav-item {
+    border-bottom: lightgrey solid 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: black;
+    background-color: white;
+}
+
+.nav-item .active {
+    border-bottom: green solid 4px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: black;
+    background-color: white;
+}
+.modal-body {
+    padding-top: 0px;
+    min-height: 645px;
+}
+.input-lg {
+    font-size: x-large;
+    color: black;
+}
+
+.description {
+    min-height: 525px;
+}
+
+.negative {
+    color: red;
+}
+
+.error {
+    border: 1px solid red;
+}
+
+.big {
+    font-size:larger; 
+    font-weight: 900;
+}
+
+.rental {
+
+}

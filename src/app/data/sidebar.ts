@@ -9,9 +9,9 @@ export const SIDEBAR = {
             url: '/investments'
         },
         {
-            name: 'Users',
-            icon: 'fas fa-users',
-            url: '/users'
+            name: 'Settings',
+            icon: 'fas fa-cog',
+            url: '/settings'
         }
     ]
 };

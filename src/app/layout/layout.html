@@ -3,13 +3,34 @@
     <!-- Sidebar -->
     <div class="fg-light bg-dark" id="sidebar-wrapper">
         <div class="sidebar-heading">
-            {{ sidebar.heading }}
+            <h4>{{ sidebar.heading }}</h4>
         </div>
         <ul class="list-group fa-ul">
-            <li class="list-group-item" *ngFor="let menuItem of sidebar.menuItems; let i = index"
-                (click)="navigate(i)" [ngClass]="{'active':sidebar.activeMenuItem == i }"><span class="fa-li">
-                    <i class="{{ menuItem.icon }}"></i></span>{{ menuItem.name }}</li>
+            <li class="list-group-item bg-dark" (click)="navigate('/investments')" [ngClass]="{'active':activeUrl == '/investments' }">
+                <span class="fa-li">
+                    <i class="fas fa-chart-line"></i>
+                </span>
+                Investments
+            </li>
+            <li class="list-group-item bg-dark" (click)="navigate('/companies')" [ngClass]="{'active':activeUrl == '/companies' }">
+                <span class="fa-li">
+                    <i class="far fa-building"></i>
+                </span>
+                Companies
+            </li>
         </ul>
+        <div class="bottom">
+            <hr>
+            <ul class="list-group fa-ul bottom">
+                <li class="list-group-item bg-dark" (click)="navigate('/settings')" [ngClass]="{'active':activeUrl == '/settings' }">
+                    <span class="fa-li">
+                        <i class="fas fa-cog"></i>
+                    </span>
+                    Settings
+                </li>
+            </ul>
+        </div>
+        
     </div>
     <!-- /#sidebar-wrapper -->
 
@@ -31,7 +52,7 @@
                 </li>
             </ul>
         </nav>
-        <div class="container-fluid">
+        <div class="container-fluid ml-0" style="max-width: 1180px;">
             <router-outlet></router-outlet>
         </div>
     </div>
