@@ -1,149 +1,207 @@
 <div class="row">
-    <div class="col-md-auto" *ngFor="let investment of investments">
-      <div class="card project">
-        <div class="card-header">
-          <div class="row">
-            <div class="col m-0" (click)="edit(investment.id)">
-              <h5>{{ investment.name }}</h5>
-            </div>
-            <div class="col-auto m-0">
-              <button class="btn btn-default" (click)="toogleFavourite(investment)">
-                <span *ngIf="investment.isFavourite" class="fas fa-heart text-danger"></span>
-                <span *ngIf="!investment.isFavourite" class="far fa-heart"></span>
-              </button>
-  
-              <button class="btn btn-default p-0" (click)="confirmDelete(confirm, investment.id)">
-                <span class="far fa-trash-alt"></span>
-              </button>
-            </div>
+  <div class="col-md-auto" *ngFor="let investment of investments">
+    <div class="card project">
+      <div class="card-header">
+        <div class="row">
+          <div class="col m-0" (click)="edit(investment.id)">
+            <h5>{{ investment.name }}</h5>
+          </div>
+          <div class="col-auto m-0">
+            <button
+              class="btn btn-default"
+              (click)="toogleFavourite(investment)"
+            >
+              <span *ngIf="investment.isFavourite" class="fas fa-heart text-danger"></span>
+              <span *ngIf="!investment.isFavourite" class="far fa-heart"></span>
+            </button>
+
+            <button
+              class="btn btn-default p-0"
+              (click)="confirmDelete(confirm, investment.id)"
+            >
+              <span class="far fa-trash-alt"></span>
+            </button>
           </div>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-6" *ngIf="investment.hasInvestmentDeal">
-              <h5>Investment Deal</h5>
-              <hr>
-              <table class="table table-sm table-borderless">
-                <tr>
-                  <td>
-                    RoI
-                  </td>
-                  <td class="text-right">
-                    {{ investment.investmentDeal.returnOnInvestment | number:'1.2-2' }}%
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    RoE
-                  </td>
-                  <td class="text-right">
-                    {{ investment.investmentDeal.returnOnEquity | number:'1.2-2' }}%
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Sales Price
-                  </td>
-                  <td class="text-right">
-                    {{ investment.investmentDeal.salesPrice | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Net Income
-                  </td>
-                  <td class="text-right">
-                    {{ investment.investmentDeal.netIncome | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Net Income/m
-                  </td>
-                  <td class="text-right">
-                    {{ investment.investmentDeal.netIncomePerMonth | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-6" *ngIf="investment.hasRentalBusiness">
-              <h5>Rental Business</h5>
-              <hr>
-              <table class="table table-sm table-borderless">
-                <tr>
-                  <td>
-                    RoI
-                  </td>
-                  <td class="text-right">
-                    {{ investment.rentalBusiness.returnOnInvestment | number:'1.2-2' }}%
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    RoE
-                  </td>
-                  <td class="text-right">
-                    {{ investment.rentalBusiness.returnOnEquity | number:'1.2-2' }}%
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Revenue
-                  </td>
-                  <td class="text-right">
-                    {{ investment.rentalBusiness.revenue | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Net Income
-                  </td>
-                  <td class="text-right">
-                    {{ investment.rentalBusiness.netIncome | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Net Income/m
-                  </td>
-                  <td class="text-right">
-                    {{ investment.rentalBusiness.netIncome / 12 | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-              </table>
-            </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6" *ngIf="investment.hasPropertyDevelopment">
+            <h5>Property Development</h5>
+            <hr />
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td>
+                  RoI
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.propertyDevelopment.returnOnInvestment
+                      | number: "1.2-2"
+                  }}%
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  RoE
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.propertyDevelopment.returnOnEquity | number: "1.2-2"
+                  }}%
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Sales Price
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.propertyDevelopment.salesPrice
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Net Income
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.propertyDevelopment.netIncome
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Net Income/m
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.propertyDevelopment.netIncomePerMonth
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+            </table>
           </div>
-          <div class="row">
-            <div class="col">
-              <hr>
-              <table class="table table-sm table-borderless">
-                <tr>
-                  <td>
-                    Total Investment
-                  </td>
-                  <td class="text-right">
-                    {{ investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Equtiy
-                  </td>
-                  <td class="text-right">
-                    {{ investment.equity | currency:'SEK':'symbol':'1.0-0':'sv' }}
-                  </td>
-                </tr>
-                <tr *ngIf="investment.investmentDeal.timespan">
-                  <td>
-                    Timespan (months)
-                  </td>
-                  <td class="text-right">
-                    {{ investment.investmentDeal.timespan }}
-                  </td>
-                </tr>
-              </table>
-            </div>
+          <div class="col-6" *ngIf="investment.hasRentalBusiness">
+            <h5>Rental Business</h5>
+            <hr />
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td>
+                  RoI
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.rentalBusiness.returnOnInvestment
+                      | number: "1.2-2"
+                  }}%
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  RoE
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.rentalBusiness.returnOnEquity | number: "1.2-2"
+                  }}%
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Revenue
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.rentalBusiness.revenue
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Net Income
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.rentalBusiness.netIncome
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Net Income/m
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.rentalBusiness.netIncome / 12
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <hr />
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td>
+                  Total Investment
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.totalInvestment
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Equtiy
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.equity | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr *ngIf="investment.propertyDevelopment.timespan">
+                <td>
+                  Timespan (months)
+                </td>
+                <td class="text-right">
+                  {{ investment.propertyDevelopment.timespan }}
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <ng-template #confirm>
+    <div class="modal-body text-center">
+      <h4>Are you sure?</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success w-50" (click)="delete()">
+        Yes
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger w-50"
+        (click)="modalRef.hide()"
+      >
+        No
+      </button>
+    </div>
+  </ng-template>
+</div>

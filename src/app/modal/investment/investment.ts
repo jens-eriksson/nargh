@@ -30,11 +30,11 @@ export class InvestmentModal implements OnInit {
     if (this.id) {
       this.investmentProvider.get(this.id).subscribe(investment => {
         this.investment.fromObject(investment);
-        this.timespan = this.toNumberString(investment.investmentDeal.timespan);
+        this.timespan = this.toNumberString(investment.propertyDevelopment.timespan);
         this.totalInvestment = this.toNumberString(investment.totalInvestment);
         this.equity = this.toNumberString(investment.equity);
         this.intrestRate = this.toNumberString(investment.intrestRate);
-        this.salesPrice = this.toNumberString(investment.investmentDeal.salesPrice);
+        this.salesPrice = this.toNumberString(investment.propertyDevelopment.salesPrice);
         this.revenue = this.toNumberString(investment.rentalBusiness.revenue);
         this.operatingCost = this.toNumberString(investment.rentalBusiness.operatingCost);
       });
@@ -55,8 +55,8 @@ export class InvestmentModal implements OnInit {
   }
 
   timespanChange(timespan) {
-    this.investment.investmentDeal.timespan = this.toNumber(timespan);
-    this.timespan = this.toNumberString(this.investment.investmentDeal.timespan);
+    this.investment.propertyDevelopment.timespan = this.toNumber(timespan);
+    this.timespan = this.toNumberString(this.investment.propertyDevelopment.timespan);
     this.investment.calculate();
   }
 
@@ -81,8 +81,8 @@ export class InvestmentModal implements OnInit {
   }
 
   salesPriceChange(salesPrice) {
-    this.investment.investmentDeal.salesPrice = this.toNumber(salesPrice);
-    this.salesPrice = this.toNumberString(this.investment.investmentDeal.salesPrice);
+    this.investment.propertyDevelopment.salesPrice = this.toNumber(salesPrice);
+    this.salesPrice = this.toNumberString(this.investment.propertyDevelopment.salesPrice);
     this.investment.calculate();
   }
 
@@ -98,12 +98,12 @@ export class InvestmentModal implements OnInit {
     this.investment.calculate();
   }
 
-  hasInvestmentDealChange() {
-    console.log(this.investment.hasInvestmentDeal);
-    if (!this.investment.hasInvestmentDeal) {
-      this.investment.investmentDeal.salesPrice = null;
+  hasPropertyDevelopmentChange() {
+    console.log(this.investment.hasPropertyDevelopment);
+    if (!this.investment.hasPropertyDevelopment) {
+      this.investment.propertyDevelopment.salesPrice = null;
       this.salesPrice =  null;
-      this.investment.investmentDeal.timespan = null;
+      this.investment.propertyDevelopment.timespan = null;
       this.timespan = null;
     }
 

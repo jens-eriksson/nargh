@@ -1,4 +1,3 @@
-import { registerLocaleData } from '@angular/common';
 export interface IInvestment {
     id: string;
     name: string;
@@ -7,10 +6,10 @@ export interface IInvestment {
     equity: number;
     intrestRate: number;
     currency: string;
-    hasInvestmentDeal: boolean;
+    hasPropertyDevelopment: boolean;
     hasRentalBusiness: boolean;
     isFavourite: boolean;
-    investmentDeal: {
+    propertyDevelopment: {
         timespan: number;
         salesPrice: number;
         intrest: number;
@@ -37,10 +36,10 @@ export class Investment implements IInvestment {
     equity: number;
     intrestRate: number;
     currency: string;
-    hasInvestmentDeal: boolean;
+    hasPropertyDevelopment: boolean;
     hasRentalBusiness: boolean;
     isFavourite: boolean;
-    investmentDeal: {
+    propertyDevelopment: {
         timespan: number;
         salesPrice: number;
         intrest: number;
@@ -66,10 +65,10 @@ export class Investment implements IInvestment {
         this.totalInvestment = null;
         this.equity = null;
         this.currency = 'SEK';
-        this.hasInvestmentDeal = false;
+        this.hasPropertyDevelopment = false;
         this.hasRentalBusiness = false;
         this.isFavourite = false;
-        this.investmentDeal = {
+        this.propertyDevelopment = {
             timespan: null,
             salesPrice:  null,
             intrest:  null,
@@ -90,24 +89,24 @@ export class Investment implements IInvestment {
 
     calculate() {
         if (
-            this.hasInvestmentDeal &&
+            this.hasPropertyDevelopment &&
             this.intrestRate &&
             this.equity &&
             this.totalInvestment &&
-            this.investmentDeal.timespan &&
-            this.investmentDeal.salesPrice
+            this.propertyDevelopment.timespan &&
+            this.propertyDevelopment.salesPrice
         ) {
-            this.investmentDeal.intrest = this.intrestRate * 0.01 * (this.totalInvestment - this.equity) / 12 * this.investmentDeal.timespan;
-            this.investmentDeal.netIncome = this.investmentDeal.salesPrice - this.totalInvestment - this.investmentDeal.intrest;
-            this.investmentDeal.netIncomePerMonth = this.investmentDeal.netIncome / this.investmentDeal.timespan;
-            this.investmentDeal.returnOnInvestment = this.investmentDeal.netIncome / this.totalInvestment * 100;
-            this.investmentDeal.returnOnEquity = this.investmentDeal.netIncome / this.equity * 100;
+            this.propertyDevelopment.intrest = this.intrestRate * 0.01 * (this.totalInvestment - this.equity) / 12 * this.propertyDevelopment.timespan;
+            this.propertyDevelopment.netIncome = this.propertyDevelopment.salesPrice - this.totalInvestment - this.propertyDevelopment.intrest;
+            this.propertyDevelopment.netIncomePerMonth = this.propertyDevelopment.netIncome / this.propertyDevelopment.timespan;
+            this.propertyDevelopment.returnOnInvestment = this.propertyDevelopment.netIncome / this.totalInvestment * 100;
+            this.propertyDevelopment.returnOnEquity = this.propertyDevelopment.netIncome / this.equity * 100;
         } else {
-            this.investmentDeal.intrest = null;
-            this.investmentDeal.netIncome = null;
-            this.investmentDeal.netIncomePerMonth = null;
-            this.investmentDeal.returnOnInvestment = null;
-            this.investmentDeal.returnOnEquity = null;
+            this.propertyDevelopment.intrest = null;
+            this.propertyDevelopment.netIncome = null;
+            this.propertyDevelopment.netIncomePerMonth = null;
+            this.propertyDevelopment.returnOnInvestment = null;
+            this.propertyDevelopment.returnOnEquity = null;
         }
         if (
             this.hasRentalBusiness &&
@@ -135,10 +134,10 @@ export class Investment implements IInvestment {
             this.name
         ) {
             this.id = this.name
-                .replace(' ', '-')
-                .replace('å', 'a')
-                .replace('ä', 'a')
-                .replace('ö', 'o')
+                .split(' ').join('-')
+                .split('å').join('a')
+                .split('ä').join('a')
+                .split('ö').join('o')
                 .toLowerCase()
                 .trim();
         }

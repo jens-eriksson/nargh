@@ -65,11 +65,11 @@
           <div class="col">
             <div class="row">
               <div class="col">
-                <h4>Investment Deal</h4>
+                <h4>Property Development</h4>
               </div>
               <div class="col text-right">
                 <label class="switch">
-                  <input type="checkbox" name="investment.hasInvestmentDeal" [(ngModel)]="investment.hasInvestmentDeal" (change)="hasInvestmentDealChange()">
+                  <input type="checkbox" name="investment.hasPropertyDevelopment" [(ngModel)]="investment.hasPropertyDevelopment" (change)="hasPropertyDevelopmentChange()">
                   <span class="slider round"></span>
                 </label>
               </div>
@@ -77,14 +77,14 @@
             <div class="form-group row">
               <label class="col-sm-8 col-form-label">Sales Price</label>
               <div class="col-sm-4">
-                <input class="form-control text-right" name="salesPrice" [disabled]="!this.investment.hasInvestmentDeal"
+                <input class="form-control text-right" name="salesPrice" [disabled]="!this.investment.hasPropertyDevelopment"
                   [(ngModel)]="salesPrice" (keyup)="salesPriceChange(salesPrice)">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-8 col-form-label">Timespan (months)</label>
               <div class="col-sm-4">
-              <input class="form-control text-right" name="timespan" [(ngModel)]="timespan" [disabled]="!this.investment.hasInvestmentDeal"
+              <input class="form-control text-right" name="timespan" [(ngModel)]="timespan" [disabled]="!this.investment.hasPropertyDevelopment"
                 (keyup)="timespanChange(timespan)">
               </div>
             </div>
@@ -96,28 +96,28 @@
             <div class="form-group row">
               <label class="col-sm-8 col-form-label">Intrest</label>
               <label
-                class="col-sm-4 col-form-label text-right negative pr-4">{{ investment.investmentDeal.intrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+                class="col-sm-4 col-form-label text-right negative pr-4">{{ investment.propertyDevelopment.intrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
             </div>
             <hr>
             <div class="form-group row">
               <label class="col-sm-8 big">Net Income</label>
               <label
-                class="col-sm-4 big text-right pr-4">{{ investment.investmentDeal.netIncome | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
+                class="col-sm-4 big text-right pr-4">{{ investment.propertyDevelopment.netIncome | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
             </div>
             <div class="form-group row">
               <label class="col-sm-8 col-form-label">Net Income/month</label>
               <label
-                class="col-sm-4 col-form-label text-right pr-4">{{ investment.investmentDeal.netIncomePerMonth | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
+                class="col-sm-4 col-form-label text-right pr-4">{{ investment.propertyDevelopment.netIncomePerMonth | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
             </div>
             <div class="form-group row">
               <label class="col-sm-8 col-form-label">Return on Investment</label>
-              <label *ngIf="investment.investmentDeal.returnOnInvestment"
-                class="col-sm-4 col-form-label text-right pr-4">{{ investment.investmentDeal.returnOnInvestment | number:'1.2-2' }}%</label>
+              <label *ngIf="investment.propertyDevelopment.returnOnInvestment"
+                class="col-sm-4 col-form-label text-right pr-4">{{ investment.propertyDevelopment.returnOnInvestment | number:'1.2-2' }}%</label>
             </div>
             <div class="form-group row">
               <label class="col-sm-8 col-form-label">Return on Equity</label>
-              <label *ngIf="investment.investmentDeal.returnOnEquity "
-                class="col-sm-4 col-form-label text-right pr-4">{{ investment.investmentDeal.returnOnEquity | number:'1.2-2' }}%</label>
+              <label *ngIf="investment.propertyDevelopment.returnOnEquity "
+                class="col-sm-4 col-form-label text-right pr-4">{{ investment.propertyDevelopment.returnOnEquity | number:'1.2-2' }}%</label>
             </div>
           </div>
           <div class="col">

@@ -1,15 +1,23 @@
-<div class="header">
+<div class="header" *ngIf="summary">
   <div class="row">
     <div class="col m-0">
       <h5>CAPITAL</h5>
       <hr />
       <div class="row">
         <div class="col">
+          <h5>Investments</h5>
+        </div>
+        <div class="col text-right mr-3">
+        <h5>{{ summary.favCount }}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
           <h5 class="mt-1">Total Investment:</h5>
         </div>
-        <div class="co text-right mr-3">
+        <div class="col text-right mr-3">
           <h5>
-            {{ this.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}
+            {{ summary.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}
           </h5>
         </div>
       </div>
@@ -17,14 +25,14 @@
         <div class="col">
           <h5 class="mt-1">Equtiy:</h5>
         </div>
-        <div class="co text-right mr-3">
-          <h5>{{ this.equity | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
+        <div class="col text-right mr-3">
+          <h5>{{ summary.equity | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
         </div>
       </div>
       <hr />
     </div>
     <div class="col m-0">
-      <h5>INVESTMENT DEALS</h5>
+      <h5>PROPERTY DEVELOPMENT</h5>
       <hr />
       <div class="row">
         <div class="col">
@@ -33,7 +41,7 @@
         <div class="co text-right mr-3">
           <h5>
             {{
-              this.netIncomeInvestment | currency: "SEK":"symbol":"1.0-0":"sv"
+              summary.netIncomeDevelopment | currency: "SEK":"symbol":"1.0-0":"sv"
             }}
           </h5>
         </div>
@@ -43,7 +51,7 @@
           <h5 class="mt-1">Timespan (months):</h5>
         </div>
         <div class="co text-right mr-3">
-          <h5>{{ this.timespan }}</h5>
+          <h5>{{ summary.timespan }}</h5>
         </div>
       </div>
       <div class="row">
@@ -51,7 +59,7 @@
           <h5 class="mt-1">Net Income/month:</h5>
         </div>
         <div class="co text-right mr-3">
-          <h5>{{ this.netIncomeInvestment / this.timespan | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
+          <h5>{{ summary.netIncomeDevelopment/ summary.timespan | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
         </div>
       </div>
       <hr />
@@ -65,7 +73,7 @@
         </div>
         <div class="co text-right mr-3">
           <h5>
-            {{ this.netIncomeRental | currency: "SEK":"symbol":"1.0-0":"sv" }}
+            {{ summary.netIncomeRental | currency: "SEK":"symbol":"1.0-0":"sv" }}
           </h5>
         </div>
       </div>
@@ -82,7 +90,7 @@
           <h5 class="mt-1">Net Income/month:</h5>
         </div>
         <div class="co text-right mr-3">
-          <h5>{{ this.netIncomeRental / 12 | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
+          <h5>{{ summary.netIncomeRental / 12 | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
         </div>
       </div>
       <hr />
