@@ -99,8 +99,8 @@ export class Investment implements IInvestment {
             this.propertyDevelopment.intrest = this.intrestRate * 0.01 * (this.totalInvestment - this.equity) / 12 * this.propertyDevelopment.timespan;
             this.propertyDevelopment.netIncome = this.propertyDevelopment.salesPrice - this.totalInvestment - this.propertyDevelopment.intrest;
             this.propertyDevelopment.netIncomePerMonth = this.propertyDevelopment.netIncome / this.propertyDevelopment.timespan;
-            this.propertyDevelopment.returnOnInvestment = this.propertyDevelopment.netIncome / this.totalInvestment * 100;
-            this.propertyDevelopment.returnOnEquity = this.propertyDevelopment.netIncome / this.equity * 100;
+            this.propertyDevelopment.returnOnInvestment = this.propertyDevelopment.netIncome / this.totalInvestment;
+            this.propertyDevelopment.returnOnEquity = this.propertyDevelopment.netIncome / this.equity;
         } else {
             this.propertyDevelopment.intrest = null;
             this.propertyDevelopment.netIncome = null;
@@ -118,8 +118,8 @@ export class Investment implements IInvestment {
         ) {
             this.rentalBusiness.intrest = this.intrestRate * 0.01 * (this.totalInvestment - this.equity);
             this.rentalBusiness.netIncome = this.rentalBusiness.revenue - this.rentalBusiness.operatingCost - this.rentalBusiness.intrest;
-            this.rentalBusiness.returnOnInvestment = this.rentalBusiness.netIncome / this.totalInvestment * 100;
-            this.rentalBusiness.returnOnEquity = this.rentalBusiness.netIncome / this.equity * 100;
+            this.rentalBusiness.returnOnInvestment = this.rentalBusiness.netIncome / this.totalInvestment;
+            this.rentalBusiness.returnOnEquity = this.rentalBusiness.netIncome / this.equity;
         } else {
             this.rentalBusiness.intrest = null;
             this.rentalBusiness.netIncome = null;

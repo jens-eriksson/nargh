@@ -1,77 +1,69 @@
+<hr>
 <div class="row">
-  <table *ngIf="propertyDevelopments" class="table table-sm">
-    <thead>
+  <div class="col">
+    <div class="custom-control custom-radio custom-control-inline ml-3">
+      <input type="radio" class="custom-control-input" id="all" name="filter" checked (click)="setFilter('all')">
+      <label class="custom-control-label" for="all"><h4>All</h4></label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" class="custom-control-input" id="development" name="filter" (click)="setFilter('development')">
+      <label class="custom-control-label" for="development"><h4>Property Development</h4></label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" class="custom-control-input" id="rental" name="filter" (click)="setFilter('rental')">
+      <label class="custom-control-label" for="rental"><h4>Rental Business</h4></label>
+    </div>
+  </div>
+  <table *ngIf="investments" class="table table-sm">
+    <thead class="bg-light">
       <tr>
-        <th colspan="2"><h3>Property Development</h3></th>
-        <th class="text-right" (click)="sortDevelopment('totalInvestment')">Total Investment</th>
-        <th class="text-right" (click)="sortDevelopment('equity')">Equity</th>
-        <th class="text-center border-left" (click)="sortDevelopment('propertyDevelopment.returnOnInvestment')">RoI</th>
-        <th class="text-center" (click)="sortDevelopment('propertyDevelopment.returnOnEquity')">RoE</th>
-        <th class="text-right" (click)="sortDevelopment('propertyDevelopment.salesPrice')">Sales Price</th>
-        <th class="text-right" (click)="sortDevelopment('propertyDevelopment.netIncome')">Net Income</th>
-        <th class="text-right" (click)="sortDevelopment('propertyDevelopment.netIncomePerMonth')">Net Income/m</th>
+        <th colspan="4"></th>
+        <th colspan="4" class="border-left text-center">
+          <h5>Property Development</h5>
+        </th>
+        <th colspan="4" class="border-left text-center">
+          <h5>Rental Business</h5>
+        </th>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <h3 class="ml-2">Investment</h3>
+        </th>
+        <th class="text-right" (click)="data('equity')">Equity</th>
+        <th class="text-right" (click)="data('totalInvestment')">Total Investment</th>
+        <th class="text-right border-left" (click)="data('propertyDevelopment.salesPrice')">Sales Price</th>
+        <th class="text-right" (click)="data('propertyDevelopment.netIncome')">Net Income</th>
+        <th class="text-center" (click)="data('propertyDevelopment.returnOnInvestment')">RoI</th>
+        <th class="text-center" (click)="data('propertyDevelopment.returnOnEquity')">RoE</th>
+        <th class="text-right border-left" (click)="data('rentalBusiness.revenue')">Revenue</th>
+        <th class="text-right" (click)="data('rentalBusiness.netIncome')">Net Income</th>
+        <th class="text-center" (click)="data('rentalBusiness.returnOnInvestment')">RoI</th>
+        <th class="text-center" (click)="data('rentalBusiness.returnOnEquity')">RoE</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let investment of propertyDevelopments">
+      <tr *ngFor="let investment of investments">
         <td>
-          <span
-            *ngIf="investment.isFavourite"
-            class="fas fa-heart text-danger"
-            (click)="toogleFavourite(investment)"
-          ></span>
-          <span
-            *ngIf="!investment.isFavourite"
-            class="far fa-heart"
-            (click)="toogleFavourite(investment)"
-          ></span>
+          <span *ngIf="investment.isFavourite" class="fas fa-heart text-danger"
+            (click)="toogleFavourite(investment)"></span>
+          <span *ngIf="!investment.isFavourite" class="far fa-heart" (click)="toogleFavourite(investment)"></span>
         </td>
         <td><a class="edit-link" (click)="edit(investment.id)">{{ investment.name }}</a></td>
-        <td class="text-right">{{ investment.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
         <td class="text-right">{{ investment.equity | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
-        <td class="text-center border-left">{{ investment.propertyDevelopment.returnOnInvestment | number: "1.1-1" }}%</td>
-        <td class="text-center">{{ investment.propertyDevelopment.returnOnEquity | number: "1.1-1" }}%</td>
-        <td class="text-right">{{ investment.propertyDevelopment.salesPrice | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
-        <td class="text-right">{{ investment.propertyDevelopment.netIncome | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
-        <td class="text-right">{{ investment.propertyDevelopment.netIncomePerMonth | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <table *ngIf="rentalBusinesses" class="table table-sm">
-    <thead>
-      <tr>
-        <th colspan="2"><h3>Rental Business</h3></th>
-        <th class="text-right" (click)="sortRental('totalInvestment')">Total Investment</th>
-        <th class="text-right" (click)="sortRental('equity')">Equity</th>
-        <th class="text-center border-left" (click)="sortRental('rentalBusiness.returnOnInvestment')">RoI</th>
-        <th class="text-center" (click)="sortRental('rentalBusiness.returnOnEquity')">RoE</th>
-        <th class="text-right" (click)="sortRental('rentalBusiness.revenue')">Revenue</th>
-        <th class="text-right" (click)="sortRental('rentalBusiness.netIncome')">Net Income</th>
-        <th class="text-right" (click)="sortRental('rentalBusiness.netIncome')">Net Income/m</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let investment of rentalBusinesses">
-        <td>
-          <span
-            *ngIf="investment.isFavourite"
-            class="fas fa-heart text-danger"
-            (click)="toogleFavourite(investment)"
-          ></span>
-          <span
-            *ngIf="!investment.isFavourite"
-            class="far fa-heart"
-            (click)="toogleFavourite(investment)"
-          ></span>
+        <td class="text-right">{{ investment.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
+        <td class="text-right border-left">
+          {{ investment.propertyDevelopment.salesPrice | currency: "SEK":"symbol":"1.0-0":"sv" }}
         </td>
-        <td><a class="edit-link" (click)="edit(investment.id)">{{ investment.name }}</a></td>
-        <td class="text-right">{{ investment.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
-        <td class="text-right">{{ investment.equity | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
-        <td class="text-center border-left">{{ investment.rentalBusiness.returnOnInvestment | number: "1.1-1" }}%</td>
-        <td class="text-center">{{ investment.rentalBusiness.returnOnEquity | number: "1.1-1" }}%</td>
-        <td class="text-right">{{ investment.rentalBusiness.revenue | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
+        <td class="text-right">{{ investment.propertyDevelopment.netIncome | currency: "SEK":"symbol":"1.0-0":"sv" }}
+        </td>
+        <td class="text-center">{{ investment.propertyDevelopment.returnOnInvestment | percent: "1.1-1" }}
+        </td>
+        <td class="text-center">{{ investment.propertyDevelopment.returnOnEquity | percent: "1.1-1" }}</td>
+        <td class="text-right border-left">
+          {{ investment.rentalBusiness.revenue | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
         <td class="text-right">{{ investment.rentalBusiness.netIncome | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
-        <td class="text-right">{{ investment.rentalBusiness.netIncome / 12 | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
+        <td class="text-center">{{ investment.rentalBusiness.returnOnInvestment | percent: "1.1-1" }}</td>
+        <td class="text-center">{{ investment.rentalBusiness.returnOnEquity | percent: "1.1-1" }}</td>
       </tr>
     </tbody>
   </table>

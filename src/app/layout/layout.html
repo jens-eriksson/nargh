@@ -6,13 +6,15 @@
             <h4>{{ sidebar.heading }}</h4>
         </div>
         <ul class="list-group fa-ul">
-            <li class="list-group-item bg-dark" (click)="navigate('/investments')" [ngClass]="{'active':activeUrl == '/investments' }">
+            <li class="list-group-item bg-dark" (click)="navigate('/investments')"
+                [ngClass]="{'active':activeUrl == '/investments' }">
                 <span class="fa-li">
                     <i class="fas fa-chart-line"></i>
                 </span>
                 Investments
             </li>
-            <li class="list-group-item bg-dark" (click)="navigate('/companies')" [ngClass]="{'active':activeUrl == '/companies' }">
+            <li class="list-group-item bg-dark" (click)="navigate('/companies')"
+                [ngClass]="{'active':activeUrl == '/companies' }">
                 <span class="fa-li">
                     <i class="far fa-building"></i>
                 </span>
@@ -22,7 +24,8 @@
         <div class="bottom">
             <hr>
             <ul class="list-group fa-ul bottom">
-                <li class="list-group-item bg-dark" (click)="navigate('/settings')" [ngClass]="{'active':activeUrl == '/settings' }">
+                <li class="list-group-item bg-dark" (click)="navigate('/settings')"
+                    [ngClass]="{'active':activeUrl == '/settings' }">
                     <span class="fa-li">
                         <i class="fas fa-cog"></i>
                     </span>
@@ -30,7 +33,7 @@
                 </li>
             </ul>
         </div>
-        
+
     </div>
     <!-- /#sidebar-wrapper -->
 
@@ -41,18 +44,20 @@
                     class="navbar-toggler-icon"></span></button>
             <ul *ngIf="userProfile" class="navbar-nav ml-auto mt-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown">
                         {{ userProfile.displayName }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" (click)="openProfile()"><span class="fas fa-user"></span>Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" (click)="signOut()"><span class="fas fa-sign-out-alt"></span>Log out</a>
+                        <a class="dropdown-item" (click)="signOut()"><span class="fas fa-sign-out-alt"></span>Log
+                            out</a>
                     </div>
                 </li>
             </ul>
         </nav>
-        <div class="container-fluid ml-0" style="max-width: 1180px;">
+        <div class="container-fluid ml-0" style="max-width: 1610px;">
             <router-outlet></router-outlet>
         </div>
     </div>

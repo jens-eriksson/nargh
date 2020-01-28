@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { IInvestment } from "src/app/model/investment";
 import { InvestmentProvider } from "src/app/providers/investment";
@@ -10,11 +10,14 @@ import { InvestmentModal } from "src/app/modal/investment/investment";
   styleUrls: ["./table.component.scss"]
 })
 export class TableComponent implements OnInit {
-  propertyDevelopments: IInvestment[];
+  investments: IInvestment[];
   rentalBusinesses: IInvestment[];
   modalRef: BsModalRef;
   deleteId: string = null;
   view = "investment-deal";
+  filter = 'all';
+  showRental = true;
+  showDevelopment = true;
 
   constructor(
     private investmentProvider: InvestmentProvider,
@@ -23,8 +26,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.view = localStorage.getItem("investments.table.view");
-    this.sortDevelopment();
-    this.sortRental();
+    this.data();
   }
 
   toogleFavourite(inv: IInvestment) {
@@ -37,30 +39,42 @@ export class TableComponent implements OnInit {
     localStorage.setItem("investments.table.view", view);
   }
 
-  sortDevelopment(orderBy?) {
-    const key = "investments.table.sort.development";
+  data(orderBy?) {
+    const key = "investments.table.sort";
     const sort = this.getSort(key, orderBy);
     const direction = sort.asc ? "asc" : "desc";
 
-    this.investmentProvider
-      .query("hasPropertyDevelopment", "==", true, sort.orderBy, direction)
+    if(this.filter == 'all') {
+      this.investmentProvider
+      .all(sort.orderBy, direction)
       .subscribe(investments => {
-        this.propertyDevelopments = investments;
+        this.investments = investments;
         this.setSort(key, sort);
       });
+    }
+    
+    if(this.filter == 'development') {
+      this.investmentProvider
+      .query('hasPropertyDevelopment', '==', true, sort.orderBy, direction)
+      .subscribe(investments => {
+        this.investments = investments;
+        this.setSort(key, sort);
+      });
+    }
+    
+    if(this.filter == 'rental') {
+      this.investmentProvider
+      .query('hasRentalBusiness', '==', true, sort.orderBy, direction)
+      .subscribe(investments => {
+        this.investments = investments;
+        this.setSort(key, sort);
+      });
+    }
   }
 
-  sortRental(orderBy?) {
-    const key = "investments.table.sort.rental";
-    const sort = this.getSort(key, orderBy);
-    const direction = sort.asc ? "asc" : "desc";
-
-    this.investmentProvider
-      .query("hasRentalBusiness", "==", true, sort.orderBy, direction)
-      .subscribe(investments => {
-        this.rentalBusinesses = investments;
-        this.setSort(key, sort);
-      });
+  setFilter(filter) {
+    this.filter = filter;
+    this.data();
   }
 
   edit(id) {
@@ -101,11 +115,11 @@ export class TableComponent implements OnInit {
       };
     }
 
-    if(!sort) {
+    if (!sort) {
       sort = {
-        orderBy: 'totalInvestment',
+        orderBy: "totalInvestment",
         asc: false
-      }
+      };
     }
 
     return sort;
@@ -113,5 +127,17 @@ export class TableComponent implements OnInit {
 
   setSort(key, sort) {
     localStorage.setItem(key, JSON.stringify(sort));
+  }
+
+  showRentalChange() {
+    if (!this.showDevelopment && !this.showRental) {
+      this.showDevelopment = true;
+    }
+  }
+
+  showDevelopmentChange() {
+    if (!this.showDevelopment && !this.showRental) {
+      this.showRental = true;
+    }
   }
 }
