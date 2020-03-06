@@ -1,8 +1,9 @@
+import { ModalPageProvider } from './../../../providers/modal-page.provider';
 import { Component, OnInit, Input } from '@angular/core';
 import { IInvestment } from 'src/app/model/investment';
-import { InvestmentProvider } from 'src/app/providers/investment';
+import { InvestmentProvider } from 'src/app/providers/investment.provider';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { InvestmentModal } from 'src/app/modal/investment/investment';
+import { InvestmentPage } from '../../investment/investment';
 
 @Component({
   selector: 'app-tiles',
@@ -16,7 +17,8 @@ export class TilesComponent implements OnInit {
 
   constructor(
     private investmentProvider: InvestmentProvider,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private modalPageProvider: ModalPageProvider
     ) { }
 
   ngOnInit() {
@@ -31,7 +33,7 @@ export class TilesComponent implements OnInit {
   }
 
   edit(id) {
-    this.modalService.show(InvestmentModal, { initialState: { id }, class: 'modal-xl', ignoreBackdropClick: true });
+    this.modalPageProvider.open(InvestmentPage, { id });
   }
 
   confirmDelete(template, id) {

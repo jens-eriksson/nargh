@@ -1,9 +1,9 @@
 <!-- Wrapper -->
-<div class="d-flex" id="wrapper" [ngClass]="{'sidebar-hidden':sidebar.hidden}">
+<div class="d-flex" id="wrapper" [ngClass]="{'sidebar-hidden':layoutProvider.sidebar.hidden}">
     <!-- Sidebar -->
     <div class="fg-light bg-dark" id="sidebar-wrapper">
         <div class="sidebar-heading">
-            <h4>{{ sidebar.heading }}</h4>
+            <h4>{{ layoutProvider.sidebar.heading }}</h4>
         </div>
         <ul class="list-group fa-ul">
             <li class="list-group-item bg-dark" (click)="navigate('/investments')"
@@ -60,7 +60,13 @@
         <div class="container-fluid ml-0" style="max-width: 1610px;">
             <router-outlet></router-outlet>
         </div>
+        <app-modal-page id="modal-page">
+        </app-modal-page>
+
+        <template #modalPage></template>
+
     </div>
     <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
+

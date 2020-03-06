@@ -1,0 +1,54 @@
+<h3>FORECAST</h3>
+<hr class="mb-0">
+<ul class="nav nav-pills nav-fill mb-3" role="tablist">
+  <li class="nav-item" *ngFor="let year of years; let first = first">
+    <a class="nav-link" [href]="'#year-' + year" data-toggle="pill" role="tab" [ngClass]="{'active':first}">
+      <h4>{{ year }}</h4>
+    </a>
+  </li>
+</ul>
+
+<div class="tab-content mb-5">
+  <div *ngFor="let forecast of forecasts; let first = first" class="tab-pane" [ngClass]="{'show active':first}"
+    [id]="'year-' + forecast.year" role="tabpanel">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h4>INCOME STATEMENT</h4>
+            <hr>
+            <h5>Revenue</h5>
+            <div class="row" *ngFor="let asset of forecast.incomeStatement.rentalBusiness.assets">
+              <label class="col-sm-8 col-form-label">{{ asset.name }}</label>
+              <label
+                class="col-sm-4 col-form-label text-right pr-4">{{ asset.revenue | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+            </div>
+            <hr class="m-0">
+            <div class="row">
+              <label
+                class="col-sm-12 col-form-label text-right pr-4">{{ forecast.incomeStatement.rentalBusiness.revenue | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+            </div>        
+            <div class="row">
+              <label class="col-sm-8 col-form-label"><h5>Operating Cost</h5></label>
+              <label 
+                class="col-sm-4 col-form-label text-right negative pr-4">{{ forecast.incomeStatement.rentalBusiness.operatingCost | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+            </div>
+            <div class="row">
+              <label class="col-sm-8 col-form-label"><h5>Bank Intrest</h5></label>
+              <label 
+                class="col-sm-4 col-form-label text-right negative pr-4">{{ forecast.incomeStatement.rentalBusiness.bankIntrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mr-2">
+          <div class="card-body">
+            <h4>BALANCE SHEET</h4>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

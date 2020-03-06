@@ -1,19 +1,35 @@
-<hr>
 <div class="row">
   <div class="col">
     <div class="custom-control custom-radio custom-control-inline ml-3">
-      <input type="radio" class="custom-control-input" id="all" name="filter" checked (click)="setFilter('all')">
-      <label class="custom-control-label" for="all"><h4>All</h4></label>
+      <input type="radio" class="custom-control-input" id="all" name="filter" checked (click)="filterArea('all')">
+      <label class="custom-control-label" for="all">
+        <h4>All</h4>
+      </label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" class="custom-control-input" id="development" name="filter" (click)="setFilter('development')">
-      <label class="custom-control-label" for="development"><h4>Property Development</h4></label>
+      <input type="radio" class="custom-control-input" id="development" name="filter"
+        (click)="filterArea('development')">
+      <label class="custom-control-label" for="development">
+        <h4>Property Development</h4>
+      </label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-      <input type="radio" class="custom-control-input" id="rental" name="filter" (click)="setFilter('rental')">
-      <label class="custom-control-label" for="rental"><h4>Rental Business</h4></label>
+      <input type="radio" class="custom-control-input" id="rental" name="filter" (click)="filterArea('rental')">
+      <label class="custom-control-label" for="rental">
+        <h4>Rental Business</h4>
+      </label>
+    </div>
+    |
+    <div class="custom-control custom-radio custom-control-inline">
+      <label class="switch">
+        <input type="checkbox" (change)="filterNonFav()" name="showNonFav" [(ngModel)]="showNonNav">
+        <span class="slider round"></span>
+      </label>
+      <h4 style="margin-top: -4px;"><span class="far fa-heart ml-2"></span></h4>
     </div>
   </div>
+</div>
+<div class="row">
   <table *ngIf="investments" class="table table-sm">
     <thead class="bg-light">
       <tr>
@@ -29,16 +45,15 @@
         <th colspan="2">
           <h3 class="ml-2">Investment</h3>
         </th>
-        <th class="text-right" (click)="data('equity')">Equity</th>
         <th class="text-right" (click)="data('totalInvestment')">Total Investment</th>
+        <th class="text-right" (click)="data('bankLoan')">Bank Loan</th>
+        <th class="text-right" (click)="data('bond')">Bond</th>
         <th class="text-right border-left" (click)="data('propertyDevelopment.salesPrice')">Sales Price</th>
         <th class="text-right" (click)="data('propertyDevelopment.netIncome')">Net Income</th>
         <th class="text-center" (click)="data('propertyDevelopment.returnOnInvestment')">RoI</th>
-        <th class="text-center" (click)="data('propertyDevelopment.returnOnEquity')">RoE</th>
         <th class="text-right border-left" (click)="data('rentalBusiness.revenue')">Revenue</th>
         <th class="text-right" (click)="data('rentalBusiness.netIncome')">Net Income</th>
         <th class="text-center" (click)="data('rentalBusiness.returnOnInvestment')">RoI</th>
-        <th class="text-center" (click)="data('rentalBusiness.returnOnEquity')">RoE</th>
       </tr>
     </thead>
     <tbody>
@@ -49,8 +64,9 @@
           <span *ngIf="!investment.isFavourite" class="far fa-heart" (click)="toogleFavourite(investment)"></span>
         </td>
         <td><a class="edit-link" (click)="edit(investment.id)">{{ investment.name }}</a></td>
-        <td class="text-right">{{ investment.equity | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
         <td class="text-right">{{ investment.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
+        <td class="text-right">{{ investment.bankLoan | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
+        <td class="text-right">{{ investment.bond | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
         <td class="text-right border-left">
           {{ investment.propertyDevelopment.salesPrice | currency: "SEK":"symbol":"1.0-0":"sv" }}
         </td>
@@ -58,13 +74,12 @@
         </td>
         <td class="text-center">{{ investment.propertyDevelopment.returnOnInvestment | percent: "1.1-1" }}
         </td>
-        <td class="text-center">{{ investment.propertyDevelopment.returnOnEquity | percent: "1.1-1" }}</td>
         <td class="text-right border-left">
           {{ investment.rentalBusiness.revenue | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
         <td class="text-right">{{ investment.rentalBusiness.netIncome | currency: "SEK":"symbol":"1.0-0":"sv" }}</td>
         <td class="text-center">{{ investment.rentalBusiness.returnOnInvestment | percent: "1.1-1" }}</td>
-        <td class="text-center">{{ investment.rentalBusiness.returnOnEquity | percent: "1.1-1" }}</td>
       </tr>
     </tbody>
   </table>
 </div>
+

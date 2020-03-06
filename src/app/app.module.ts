@@ -1,3 +1,4 @@
+import { LayoutProvider } from './providers/layout.provider';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -7,8 +8,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-
+import { EditorModule } from '@tinymce/tinymce-angular';
 import { AppRoutingModule } from './app-routing.module';
+
 import { App } from './app';
 import { environment } from './../environments/environment';
 
@@ -23,18 +25,26 @@ import { CompaniesPage } from './pages/companies/companies';
 
 import { EditUserModal } from './modal/user/edit-user/edit-user';
 import { NewUserModal } from './modal/user/new-user/new-user';
-import { InvestmentModal } from './modal/investment/investment';
+import { InvestmentPage } from './pages/investment/investment';
 
-import { AuthenticationProvider } from './providers/authentication';
-import { AccessGuardProvider } from './providers/access-guard';
-import { UserProfileProvider } from './providers/user-profile';
-import { InvestmentProvider } from './providers/investment';
+import { AuthenticationProvider } from './providers/authentication.provider';
+import { AccessGuardProvider } from './providers/access-guard.provider';
+import { UserProfileProvider } from './providers/user-profile.provider';
+import { InvestmentProvider } from './providers/investment.provider';
+import { ChartProvider } from './providers/chart.provider';
+import { ModalPageProvider } from './providers/modal-page.provider';
 
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
+
 import { SummaryComponent } from './pages/investments/summary/summary.component';
 import { TableComponent } from './pages/investments/table/table.component';
 import { TilesComponent } from './pages/investments/tiles/tiles.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TimelineChartComponent } from './pages/investments/timeline-chart/timeline-chart.component';
+import { BondChartComponent } from './pages/investments/bond-chart/bond-chart.component';
+import { ForecastComponent } from './pages/investments/forecast/forecast.component';
+import { ModalPageComponent } from './layout/modal-page/modal-page.component';
 
 registerLocaleData(localeSv, 'sv');
 
@@ -50,10 +60,14 @@ registerLocaleData(localeSv, 'sv');
     TruncatePipe,
     EditUserModal,
     NewUserModal,
-    InvestmentModal,
+    InvestmentPage,
     SummaryComponent,
     TableComponent,
-    TilesComponent
+    TilesComponent,
+    TimelineChartComponent,
+    BondChartComponent,
+    ModalPageComponent,
+    ForecastComponent
   ],
   imports: [
     BrowserModule,
@@ -64,18 +78,24 @@ registerLocaleData(localeSv, 'sv');
     AngularFirestoreModule,
     AngularFireAuthModule,
     ModalModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    BrowserAnimationsModule,
+    EditorModule
   ],
   providers: [
     AuthenticationProvider,
     AccessGuardProvider,
     UserProfileProvider,
-    InvestmentProvider
+    InvestmentProvider,
+    ChartProvider,
+    ModalPageProvider,
+    LayoutProvider
   ],
   entryComponents: [
     EditUserModal,
     NewUserModal,
-    InvestmentModal
+    ModalPageComponent,
+    InvestmentPage
   ],
   bootstrap: [App]
 })

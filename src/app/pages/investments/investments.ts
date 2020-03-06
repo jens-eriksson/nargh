@@ -1,8 +1,6 @@
-import { InvestmentProvider } from './../../providers/investment';
+import { ModalPageProvider } from './../../providers/modal-page.provider';
 import { Component, OnInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { InvestmentModal } from 'src/app/modal/investment/investment';
-import { IInvestment } from 'src/app/model/investment';
+import { InvestmentPage } from '../investment/investment';
 
 @Component({
   selector: 'app-investments',
@@ -10,24 +8,31 @@ import { IInvestment } from 'src/app/model/investment';
   styleUrls: ['./investments.scss']
 })
 export class InvestmentsPage implements OnInit {
-  modalRef: BsModalRef;
-  view = 'tiles';
+  view;
+  showOnlyFavourites = false;
 
   constructor(
-    private modalService: BsModalService
+    private modalPageProvider: ModalPageProvider
   ) {
   }
 
   ngOnInit() {
     this.view = localStorage.getItem('investments.view');
+    if (!this.view) {
+      this.view = 'tiles';
+    }
   }
 
   add() {
-    this.modalService.show(InvestmentModal, {class: 'modal-xl', ignoreBackdropClick: true});
+    this.modalPageProvider.open(InvestmentPage);
   }
 
   toggleView(view) {
     this.view = view;
     localStorage.setItem('investments.view', view);
+  }
+
+  toggleFavourite() {
+    this.showOnlyFavourites = !this.showOnlyFavourites;
   }
 }

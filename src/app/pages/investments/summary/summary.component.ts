@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InvestmentProvider } from 'src/app/providers/investment';
+import { InvestmentProvider } from 'src/app/providers/investment.provider';
 
 @Component({
   selector: 'app-summary',
@@ -7,14 +7,13 @@ import { InvestmentProvider } from 'src/app/providers/investment';
   styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnInit {
-  summary;
+  capital;
 
   constructor(private investmentProvider: InvestmentProvider) { }
 
   ngOnInit() {
     this.investmentProvider.all('name', 'asc').subscribe(investments => {
-      this.summary = this.investmentProvider.calculateSummary(investments);
-    })
+      this.capital = this.investmentProvider.calculateCapital(investments);
+    });
   }
-
 }

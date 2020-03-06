@@ -1,94 +1,106 @@
-import { Component, OnInit } from "@angular/core";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { IInvestment } from "src/app/model/investment";
-import { InvestmentProvider } from "src/app/providers/investment";
-import { InvestmentModal } from "src/app/modal/investment/investment";
+import { ModalPageProvider } from './../../../providers/modal-page.provider';
+import { WhereCondition } from './../../../model/where-condition';
+import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { IInvestment } from 'src/app/model/investment';
+import { InvestmentProvider } from 'src/app/providers/investment.provider';
+import { InvestmentPage } from '../../investment/investment';
 
 @Component({
-  selector: "app-table",
-  templateUrl: "./table.component.html",
-  styleUrls: ["./table.component.scss"]
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
+  private readonly SORT_KEY = 'investments.table.sort';
+  private readonly FILTER_KEY = 'investments.table.filter';
+  subscription;
   investments: IInvestment[];
-  rentalBusinesses: IInvestment[];
   modalRef: BsModalRef;
   deleteId: string = null;
-  view = "investment-deal";
-  filter = 'all';
-  showRental = true;
-  showDevelopment = true;
+  showNonNav: boolean;
 
   constructor(
     private investmentProvider: InvestmentProvider,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private modalPageProvider: ModalPageProvider
   ) {}
 
   ngOnInit() {
-    this.view = localStorage.getItem("investments.table.view");
     this.data();
   }
 
   toogleFavourite(inv: IInvestment) {
     inv.isFavourite = !inv.isFavourite;
     this.investmentProvider.set(inv);
-  }
-
-  toogleView(view) {
-    this.view = view;
-    localStorage.setItem("investments.table.view", view);
+    this.data();
   }
 
   data(orderBy?) {
-    const key = "investments.table.sort";
-    const sort = this.getSort(key, orderBy);
-    const direction = sort.asc ? "asc" : "desc";
+    const sort = this.getSort(orderBy);
+    const filter = this.getFilter();
+    const direction = sort.asc ? 'asc' : 'desc';
 
-    if(this.filter == 'all') {
-      this.investmentProvider
-      .all(sort.orderBy, direction)
-      .subscribe(investments => {
-        this.investments = investments;
-        this.setSort(key, sort);
+    const conditions: WhereCondition[] = [];
+
+    if (filter.area === 'development') {
+      conditions.push({
+        field: 'hasPropertyDevelopment',
+        op: '==',
+        value: true
       });
     }
-    
-    if(this.filter == 'development') {
-      this.investmentProvider
-      .query('hasPropertyDevelopment', '==', true, sort.orderBy, direction)
-      .subscribe(investments => {
-        this.investments = investments;
-        this.setSort(key, sort);
+
+    if (filter.area === 'rental') {
+      conditions.push({
+        field: 'hasRentalBusiness',
+        op: '==',
+        value: true
       });
     }
-    
-    if(this.filter == 'rental') {
-      this.investmentProvider
-      .query('hasRentalBusiness', '==', true, sort.orderBy, direction)
-      .subscribe(investments => {
-        this.investments = investments;
-        this.setSort(key, sort);
+
+    if (!filter.showNonFav) {
+      conditions.push({
+        field: 'isFavourite',
+        op: '==',
+        value: true
       });
     }
+
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = this.investmentProvider
+      .query(conditions, sort.orderBy, direction)
+      .subscribe(investments => {
+        this.investments = investments;
+        this.setSort(sort);
+      });
   }
 
-  setFilter(filter) {
-    this.filter = filter;
+  filterArea(area) {
+    const filter = this.getFilter();
+    filter.area = area;
+    this.setFilter(filter);
+    this.data();
+  }
+
+  filterNonFav() {
+    const filter = this.getFilter();
+    filter.showNonFav = !filter.showNonFav;
+    this.setFilter(filter);
     this.data();
   }
 
   edit(id) {
-    this.modalService.show(InvestmentModal, {
-      initialState: { id },
-      class: "modal-xl",
-      ignoreBackdropClick: true
-    });
+    this.modalPageProvider.open(InvestmentPage, { id: id });
   }
 
   confirmDelete(template, id) {
     this.deleteId = id;
     this.modalRef = this.modalService.show(template, {
-      class: "modal-dialog-centered",
+      class: 'modal-dialog-centered',
       ignoreBackdropClick: true
     });
   }
@@ -102,10 +114,10 @@ export class TableComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  getSort(key, orderBy?) {
-    let sort = JSON.parse(localStorage.getItem(key));
+  getSort(orderBy?) {
+    let sort = JSON.parse(localStorage.getItem(this.SORT_KEY));
     if (orderBy) {
-      let asc = true;
+      let asc = false;
       if (sort && sort.orderBy === orderBy) {
         asc = !sort.asc;
       }
@@ -117,7 +129,7 @@ export class TableComponent implements OnInit {
 
     if (!sort) {
       sort = {
-        orderBy: "totalInvestment",
+        orderBy: 'totalInvestment',
         asc: false
       };
     }
@@ -125,19 +137,23 @@ export class TableComponent implements OnInit {
     return sort;
   }
 
-  setSort(key, sort) {
-    localStorage.setItem(key, JSON.stringify(sort));
+  setSort(sort) {
+    localStorage.setItem(this.SORT_KEY, JSON.stringify(sort));
   }
 
-  showRentalChange() {
-    if (!this.showDevelopment && !this.showRental) {
-      this.showDevelopment = true;
+  getFilter() {
+    let filter = JSON.parse(localStorage.getItem(this.FILTER_KEY));
+    if (!filter) {
+      filter = {
+        area: 'all',
+        showNonFav: true
+      };
     }
+    this.showNonNav = filter.showNonFav;
+    return filter;
   }
 
-  showDevelopmentChange() {
-    if (!this.showDevelopment && !this.showRental) {
-      this.showRental = true;
-    }
+  setFilter(filter) {
+    localStorage.setItem(this.FILTER_KEY, JSON.stringify(filter));
   }
 }

@@ -1,0 +1,295 @@
+<form #form="ngForm" (ngSubmit)="saveAndClose(form)">
+  <input class="form-control header-input" name="deal.name" [(ngModel)]="investment.name" #dealName="ngModel"
+    placeholder="Name..." required [class.error]="form.submitted && dealName.invalid">
+  <div class="body m-1">
+    <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#numbers" role="tab">
+          <h4>Numbers</h4>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#description" role="tab">
+          <h4>Description</h4>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#images" role="tab">
+          <h4>Images</h4>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#documents" role="tab">
+          <h4>Documents</h4>
+        </a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="numbers" role="tabpanel">
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <h5>Total Investment</h5>
+                  <div class="input-group mb-2 mr-sm-2">
+                    <label class="form-control text-right">{{ this.investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+                    <div class="input-group-apend">
+                      <button type="button" class="btn btn-light" data-toggle="modal" data-target="#add-investment-modal"><span class="fas fa-edit"></span></button>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+     
+                <div class="col">
+                  <div class="form-group">
+                    <h5>Bank Loan</h5>
+                    <input class="form-control text-right" name="bankLoan" [(ngModel)]="bankLoan"
+                      (keyup)="bankLoanChange(bankLoan)">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <h5>Corporate Bond</h5>
+                    <input class="form-control text-right" name="bond" [(ngModel)]="bond" (keyup)="bondChange(bond)">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <h5>Equity</h5>
+                    <input class="form-control text-right" name="equity" [(ngModel)]="equity"
+                      (keyup)="equityChange(equity)">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <h5>Bank Intrest Rate (%)</h5>
+                    <input class="form-control text-right" name="bankIntrestRate" [(ngModel)]="bankIntrestRate"
+                      (keyup)="bankIntrestRateChange(bankIntrestRate)">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <h5>Bond Intrest Rate (%)</h5>
+                    <input class="form-control text-right" name="bondIntrestRate" [(ngModel)]="bondIntrestRate"
+                      (keyup)="bondIntrestRateChange(bondIntrestRate)">
+                  </div>
+                </div>
+        
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <hr>
+            <div class="row">
+              <div class="col">
+                <h5>Property Development</h5>
+              </div>
+              <div class="col text-right">
+                <label class="switch">
+                  <input type="checkbox" name="investment.hasPropertyDevelopment"
+                    [(ngModel)]="investment.hasPropertyDevelopment" (change)="hasPropertyDevelopmentChange()">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>            
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Start Date</label>
+              <div class="col-sm-4">
+                <input type="month" class="form-control text-right" name="investment.propertyDevelopment.startDate" [(ngModel)]="investment.propertyDevelopment.startDate" (change)="dateChange()">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">End Date</label>
+              <div class="col-sm-4">
+                <input type="month" class="form-control text-right" name="investment.propertyDevelopment.endDate" [(ngModel)]="investment.propertyDevelopment.endDate" (change)="dateChange()">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Sales Price</label>
+              <div class="col-sm-4">
+                <input class="form-control text-right" name="salesPrice"
+                  [disabled]="!this.investment.hasPropertyDevelopment" [(ngModel)]="salesPrice"
+                  (keyup)="salesPriceChange(salesPrice)">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Total Investment</label>
+              <label *ngIf="salesPrice"
+                class="col-sm-4 col-form-label text-right negative pr-4">{{ investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+            </div>
+            <div class="form-group row" style="margin-top: 85px;">
+              <label class="col-sm-8 col-form-label">Intrest</label>
+              <label
+                class="col-sm-4 col-form-label text-right negative pr-4">{{ investment.propertyDevelopment.intrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+            </div>
+            <hr>
+            <div class="form-group row">
+              <label class="col-sm-8 big">Net Income</label>
+              <label
+                class="col-sm-4 big text-right pr-4">{{ investment.propertyDevelopment.netIncome | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Net Income/month</label>
+              <label
+                class="col-sm-4 col-form-label text-right pr-4">{{ investment.propertyDevelopment.netIncomePerMonth | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Return on Investment</label>
+              <label *ngIf="investment.propertyDevelopment.returnOnInvestment"
+                class="col-sm-4 col-form-label text-right pr-4">{{ investment.propertyDevelopment.returnOnInvestment | percent:'1.2-2' }}</label>
+            </div>
+          </div>
+          <div class="col">
+            <hr>
+            <div class="row rental">
+              <div class="col">
+                <h5>Rental Business</h5>
+              </div>
+              <div class="col text-right">
+                <label class="switch">
+                  <input type="checkbox" name="investment.hasRentalBusiness" [(ngModel)]="investment.hasRentalBusiness"
+                    (change)="hasRentalBusinessChange()">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Start Date</label>
+              <div class="col-sm-4">
+                <input type="month" class="form-control text-right" name="investment.rentalBusiness.startDate" [(ngModel)]="investment.rentalBusiness.startDate" (change)="dateChange()">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">End Date</label>
+              <div class="col-sm-4">
+                <input type="month" class="form-control text-right" name="investment.rentalBusiness.endDate" [(ngModel)]="investment.rentalBusiness.endDate" (change)="dateChange()">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Revenue</label>
+              <div class="col-sm-4">
+                <input class="form-control text-right" name="revenue" [disabled]="!this.investment.hasRentalBusiness"
+                  [(ngModel)]="revenue" (keyup)="revenueChange(revenue)">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Operating Cost</label>
+              <div class="col-sm-4">
+                <input class="form-control text-right negative" name="operatingCost"
+                  [disabled]="!this.investment.hasRentalBusiness" [(ngModel)]="operatingCost"
+                  (keyup)="operatingCostChange(operatingCost)">
+              </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+              <label class="col-sm-8 big ">Operating Income</label>
+              <label
+                class="col-sm-4 big text-right pr-4">{{ investment.rentalBusiness.revenue - investment.rentalBusiness.operatingCost | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Intrest</label>
+              <label
+                class="col-sm-4 col-form-label text-right negative pr-4">{{ investment.rentalBusiness.intrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+            </div>
+            <hr>
+            <div class="form-group row">
+              <label class="col-sm-8 big ">Net Income</label>
+              <label
+                class="col-sm-4 big text-right pr-4">{{ investment.rentalBusiness.netIncome | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Net Income/month</label>
+              <label *ngIf="investment.rentalBusiness.returnOnInvestment"
+                class="col-sm-4 col-form-label text-right pr-4">{{ investment.rentalBusiness.netIncome / 12 | currency:'SEK':'symbol':'1.0-0':'sv'}}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-8 col-form-label">Return on Investment</label>
+              <label *ngIf="investment.rentalBusiness.returnOnInvestment"
+                class="col-sm-4 col-form-label text-right pr-4">{{ investment.rentalBusiness.returnOnInvestment | percent:'1.2-2' }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="description" role="tabpanel">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <editor [init]="{
+                base_url: '/tinymce', 
+                suffix: '.min',
+                plugins: 'lists advlist',
+                toolbar: 'undo redo | bold italic | bullist numlist outdent indent'
+              }" name="investment.description" [(ngModel)]="investment.description" placeholder="Description..."
+                class="description"></editor>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="images" role="tabpanel">...</div>
+      <div class="tab-pane fade" id="documents" role="tabpanel">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <input type="submit" class="btn btn-sm btn-success" value="Save & Close">
+    </div>
+  </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="add-investment-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Investments</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-5">
+            <input type="month" class="form-control" name="addInvestmentDate" [(ngModel)]="addInvestmentDate">
+          </div>
+          <div class="col-5">
+            <input class="form-control" name="addInvestmentAmount" [(ngModel)]="addInvestmentAmount" placeholder="Amount..."
+                    (keyup)="addInvestmentAmountChange(addInvestmentAmount)">
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn" (click)="addInvestment()"><span class="fas fa-plus"></span></button>
+          </div>
+        </div>
+        <hr>
+        <div class="row" *ngFor="let inv of investment.investments">
+          <div class="col-5">
+            <label class="p-2">{{ inv.date }}</label>
+          </div>
+          <div class="col-5">
+            <label class="p-2">{{ inv.amount | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn" (click)="removeInvestment(inv)"><span class="fas fa-trash"></span></button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-5">
+            
+          </div>
+          <div class="col-5">
+            <label class="p-2"><b>{{ investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</b></label>
+          </div>
+          <div class="col-2">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" (click)="save()">Save & Close</button>
+      </div>
+    </div>
+  </div>
+</div>

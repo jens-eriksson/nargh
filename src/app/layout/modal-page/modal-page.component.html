@@ -1,0 +1,8 @@
+<div class="modal-page" [ngClass]="{'sidebar-hidden':layoutProvider.sidebar.hidden}">
+    <div class="modal-page-header">
+        <button class="btn btn-sm btn-danger float-right" (click)="close()">X</button>
+    </div>
+    <div class="modal-page-body">
+        <template #modalPageContent></template>
+    </div>
+</div>

@@ -1,99 +1,31 @@
-<div class="header" *ngIf="summary">
-  <div class="row">
-    <div class="col m-0">
-      <h5>CAPITAL</h5>
-      <hr />
-      <div class="row">
-        <div class="col">
-          <h5>Investments</h5>
-        </div>
-        <div class="col text-right mr-3">
-        <h5>{{ summary.favCount }}</h5>
-        </div>
-      </div>
+<div *ngIf="capital">
+  <h3>CAPITAL</h3>
+  <hr />
+  <div class="row mb-4">
+    <div class="col">
       <div class="row">
         <div class="col">
           <h5 class="mt-1">Total Investment:</h5>
         </div>
         <div class="col text-right mr-3">
           <h5>
-            {{ summary.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}
+            {{ capital.totalInvestment | currency: "SEK":"symbol":"1.0-0":"sv" }}
           </h5>
         </div>
-      </div>
-      <div class="row">
         <div class="col">
-          <h5 class="mt-1">Equtiy:</h5>
+          <h5 class="mt-1">Bank Loan:</h5>
         </div>
         <div class="col text-right mr-3">
-          <h5>{{ summary.equity | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
-        </div>
-      </div>
-      <hr />
-    </div>
-    <div class="col m-0">
-      <h5>PROPERTY DEVELOPMENT</h5>
-      <hr />
-      <div class="row">
-        <div class="col">
-          <h5 class="mt-1">Net Income:</h5>
-        </div>
-        <div class="co text-right mr-3">
           <h5>
-            {{
-              summary.netIncomeDevelopment | currency: "SEK":"symbol":"1.0-0":"sv"
-            }}
+            {{ capital.bankLoan | currency: "SEK":"symbol":"1.0-0":"sv" }}
           </h5>
         </div>
-      </div>
-      <div class="row">
         <div class="col">
-          <h5 class="mt-1">Timespan (months):</h5>
+          <h5 class="mt-1">Corporate Bonds:</h5>
         </div>
-        <div class="co text-right mr-3">
-          <h5>{{ summary.timespan }}</h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <h5 class="mt-1">Net Income/month:</h5>
-        </div>
-        <div class="co text-right mr-3">
-          <h5>{{ summary.netIncomeDevelopment/ summary.timespan | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
+        <div class="col text-right mr-3">
+          <h5>{{ capital.bond | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
         </div>
       </div>
-      <hr />
-    </div>
-    <div class="col m-0">
-      <h5>RENTAL BUSINESS</h5>
-      <hr />
-      <div class="row">
-        <div class="col">
-          <h5 class="mt-1">Net Income:</h5>
-        </div>
-        <div class="co text-right mr-3">
-          <h5>
-            {{ summary.netIncomeRental | currency: "SEK":"symbol":"1.0-0":"sv" }}
-          </h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <h5 class="mt-1">Timespan:</h5>
-        </div>
-        <div class="co text-right mr-3">
-          <h5>yearly</h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <h5 class="mt-1">Net Income/month:</h5>
-        </div>
-        <div class="co text-right mr-3">
-          <h5>{{ summary.netIncomeRental / 12 | currency: "SEK":"symbol":"1.0-0":"sv" }}</h5>
-        </div>
-      </div>
-      <hr />
     </div>
   </div>
-</div>

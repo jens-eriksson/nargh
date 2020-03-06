@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationProvider } from '../providers/authentication';
+import { AuthenticationProvider } from '../providers/authentication.provider';
 
 @Component({
   selector: 'app-sign-in',

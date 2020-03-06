@@ -1,9 +1,10 @@
+import { LayoutProvider } from './../providers/layout.provider';
+import { ModalPageProvider } from './../providers/modal-page.provider';
 import { EditUserModal } from '../modal/user/edit-user/edit-user';
-import { UserProfileProvider } from './../providers/user-profile';
+import { UserProfileProvider } from './../providers/user-profile.provider';
 import { UserProfile } from './../model/user-profile';
-import { AuthenticationProvider } from '../providers/authentication';
+import { AuthenticationProvider } from '../providers/authentication.provider';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { SIDEBAR } from '../data/sidebar';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -14,9 +15,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   styleUrls: ['./layout.scss']
 })
 export class LayoutPage implements OnInit {
-  mobileView = false;
   userProfile: UserProfile;
-  sidebar = SIDEBAR;
   activeUrl: string;
 
   constructor(
@@ -24,7 +23,9 @@ export class LayoutPage implements OnInit {
     private router: Router,
     private authProvider: AuthenticationProvider,
     private userProfileProvider: UserProfileProvider,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private modalPageProvider: ModalPageProvider,
+    public layoutProvider: LayoutProvider
   ) {
     if (this.authProvider.isAuthenticated()) {
       this.userProfileProvider.get(this.authProvider.currentUser()).subscribe(userProfile => {
@@ -38,26 +39,25 @@ export class LayoutPage implements OnInit {
       .observe(['(min-width: 768px)'])
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
-          this.sidebar.hidden = false;
-          this.mobileView = false;
+          this.layoutProvider.sidebar.hidden = false;
+          this.layoutProvider.mobileView = false;
         } else {
-          this.sidebar.hidden = true;
-          this.mobileView = true;
+          this.layoutProvider.sidebar.hidden = true;
+          this.layoutProvider.mobileView = true;
         }
       });
     this.activeUrl = this.router.url;
   }
 
   toggleSidebar() {
-    this.sidebar.hidden = !this.sidebar.hidden;
+    this.layoutProvider.sidebar.hidden = !this.layoutProvider.sidebar.hidden;
   }
 
   navigate(url) {
     this.activeUrl = url;
-    console.log(url);
     this.router.navigateByUrl(url);
-    if (this.mobileView) {
-      this.sidebar.hidden = true;
+    if (this.layoutProvider.mobileView) {
+      this.layoutProvider.sidebar.hidden = true;
     }
   }
 
@@ -69,5 +69,9 @@ export class LayoutPage implements OnInit {
 
   openProfile() {
     this.modalService.show(EditUserModal, { initialState: { uid: this.userProfile.uid } });
+  }
+
+  openModalPage(id) {
+    this.modalPageProvider.open(id);
   }
 }

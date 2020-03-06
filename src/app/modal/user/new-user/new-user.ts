@@ -1,6 +1,6 @@
 import { UserProfile } from '../../../model/user-profile';
-import { UserProfileProvider } from '../../../providers/user-profile';
-import { AuthenticationProvider } from '../../../providers/authentication';
+import { UserProfileProvider } from '../../../providers/user-profile.provider';
+import { AuthenticationProvider } from '../../../providers/authentication.provider';
 import { Component, OnInit } from '@angular/core';
 import {  BsModalRef } from 'ngx-bootstrap/modal';
 

@@ -1,7 +1,7 @@
-import { InvestmentProvider } from '../../providers/investment';
-import { Investment, IInvestment } from '../../model/investment';
+import { ModalPageProvider } from '../../providers/modal-page.provider';
+import { InvestmentProvider } from '../../providers/investment.provider';
+import { Investment } from '../../model/investment';
 import { Component, OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -9,20 +9,25 @@ import { NgForm } from '@angular/forms';
   templateUrl: './investment.html',
   styleUrls: ['./investment.scss']
 })
-export class InvestmentModal implements OnInit {
+export class InvestmentPage implements OnInit {
   id: string;
   investment: Investment = new Investment();
   timespan: string;
-  totalInvestment: string;
+  addInvestmentAmount: string;
+  addInvestmentDate: string;
+  bankLoan: string;
+  bond: string;
   equity: string;
-  intrestRate: string;
+  bankIntrestRate: string;
+  bondIntrestRate: string;
   salesPrice: string;
   revenue: string;
   operatingCost: string;
+  startDate = new Date();
 
   constructor(
-    private bsModalRef: BsModalRef,
-    private investmentProvider: InvestmentProvider
+    private investmentProvider: InvestmentProvider,
+    private modalPageProvider: ModalPageProvider
     ) {
   }
 
@@ -31,9 +36,11 @@ export class InvestmentModal implements OnInit {
       this.investmentProvider.get(this.id).subscribe(investment => {
         this.investment.fromObject(investment);
         this.timespan = this.toNumberString(investment.propertyDevelopment.timespan);
-        this.totalInvestment = this.toNumberString(investment.totalInvestment);
         this.equity = this.toNumberString(investment.equity);
-        this.intrestRate = this.toNumberString(investment.intrestRate);
+        this.bankLoan = this.toNumberString(investment.bankLoan);
+        this.bond = this.toNumberString(investment.bond);
+        this.bankIntrestRate = this.toNumberString(investment.bankIntrestRate);
+        this.bondIntrestRate = this.toNumberString(investment.bondIntrestRate);
         this.salesPrice = this.toNumberString(investment.propertyDevelopment.salesPrice);
         this.revenue = this.toNumberString(investment.rentalBusiness.revenue);
         this.operatingCost = this.toNumberString(investment.rentalBusiness.operatingCost);
@@ -41,17 +48,41 @@ export class InvestmentModal implements OnInit {
     }
   }
 
-  ok(form: NgForm) {
+  addInvestment() {
+    if(this.addInvestmentAmount && this.addInvestmentDate) {
+      this.investment.investments.push({
+        date: this.addInvestmentDate,
+        amount: this.toNumber(this.addInvestmentAmount)
+      });
+
+      this.investment.totalInvestment = 0;
+      for(let inv of this.investment.investments) {
+        this.investment.totalInvestment += inv.amount;
+      }
+    }
+  }
+
+  removeInvestment(selected) {
+    this.investment.investments = this.investment.investments.filter(i => i.date !== selected.date || i.amount !== selected.amount);
+    this.investment.totalInvestment = 0;
+      for(let inv of this.investment.investments) {
+        this.investment.totalInvestment += inv.amount;
+      }
+  }
+
+  saveAndClose(form: NgForm) {
     if (form.valid) {
       this.investment.generateId();
       this.investmentProvider.set(this.investment.toObject()).then(() => {
-        this.bsModalRef.hide();
+        this.modalPageProvider.close();
       });
     }
   }
 
-  cancel() {
-    this.bsModalRef.hide();
+  save() {
+    this.investment.calculate();
+    this.investment.generateId();
+    this.investmentProvider.set(this.investment.toObject());
   }
 
   timespanChange(timespan) {
@@ -60,9 +91,20 @@ export class InvestmentModal implements OnInit {
     this.investment.calculate();
   }
 
-  totalInvestmentChange(totalInvestment) {
-    this.investment.totalInvestment = this.toNumber(totalInvestment);
-    this.totalInvestment = this.toNumberString(this.investment.totalInvestment);
+  addInvestmentAmountChange(amount) {
+    amount = this.toNumber(amount);
+    this.addInvestmentAmount = this.toNumberString(amount);
+  }
+
+  bankLoanChange(bankLoan) {
+    this.investment.bankLoan = this.toNumber(bankLoan);
+    this.bankLoan = this.toNumberString(this.investment.bankLoan);
+    this.investment.calculate();
+  }
+
+  bondChange(bond) {
+    this.investment.bond = this.toNumber(bond);
+    this.bond = this.toNumberString(this.investment.bond);
     this.investment.calculate();
   }
 
@@ -72,10 +114,18 @@ export class InvestmentModal implements OnInit {
     this.investment.calculate();
   }
 
-  intrestRateChange(intrestRate) {
-    if (!intrestRate.endsWith('.')) {
-      this.investment.intrestRate = this.toNumber(intrestRate);
-      this.intrestRate = this.toNumberString(this.investment.intrestRate);
+  bankIntrestRateChange(bankIntrestRate) {
+    if (!bankIntrestRate.endsWith('.')) {
+      this.investment.bankIntrestRate = this.toNumber(bankIntrestRate);
+      this.bankIntrestRate = this.toNumberString(this.investment.bankIntrestRate);
+      this.investment.calculate();
+    }
+  }
+
+  bondIntrestRateChange(bondIntrestRate) {
+    if (!bondIntrestRate.endsWith('.')) {
+      this.investment.bondIntrestRate = this.toNumber(bondIntrestRate);
+      this.bondIntrestRate = this.toNumberString(this.investment.bondIntrestRate);
       this.investment.calculate();
     }
   }
@@ -99,7 +149,6 @@ export class InvestmentModal implements OnInit {
   }
 
   hasPropertyDevelopmentChange() {
-    console.log(this.investment.hasPropertyDevelopment);
     if (!this.investment.hasPropertyDevelopment) {
       this.investment.propertyDevelopment.salesPrice = null;
       this.salesPrice =  null;
@@ -117,6 +166,10 @@ export class InvestmentModal implements OnInit {
       this.investment.rentalBusiness.operatingCost = null;
       this.operatingCost = null;
     }
+    this.investment.calculate();
+  }
+
+  dateChange() {
     this.investment.calculate();
   }
 

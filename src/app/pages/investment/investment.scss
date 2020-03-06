@@ -6,6 +6,15 @@ label {
     white-space: nowrap;
 }
 
+.header-input {
+    font-size: 2rem;
+    color: black;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    width: 100%;
+    max-width: 100%;
+}
+
 .nav-pills {
     border: none;
     margin-bottom: 30px;
@@ -22,20 +31,13 @@ label {
 }
 
 .nav-item .active {
-    border-bottom: green solid 4px;
+    border-bottom: #007bff solid 4px;
+    border-radius: 0px;
     border-top: none;
     border-left: none;
     border-right: none;
     color: black;
     background-color: white;
-}
-.modal-body {
-    padding-top: 0px;
-    min-height: 645px;
-}
-.input-lg {
-    font-size: x-large;
-    color: black;
 }
 
 .description {
@@ -55,6 +57,6 @@ label {
     font-weight: 900;
 }
 
-.rental {
-
+.body {
+    padding: 15px;
 }

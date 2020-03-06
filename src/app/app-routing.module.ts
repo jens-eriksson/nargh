@@ -1,6 +1,6 @@
 import { CompaniesPage } from './pages/companies/companies';
 import { SettingsPage } from './pages/settings/settings';
-import { AccessGuardProvider } from './providers/access-guard';
+import { AccessGuardProvider } from './providers/access-guard.provider';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutPage } from './layout/layout';

@@ -1,0 +1,55 @@
+/* MODAL STYLES
+-------------------------------*/
+app-modal-page {
+    /* modals are hidden by default */
+    display: none;
+
+    .modal-page {
+        /* modal container fixed across whole screen */
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        left: 250px;
+        bottom: 10px;
+        background: #fff;
+        border-radius: 0.2rem;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        overflow: hidden;
+
+        /* z-index must be higher than .modal-page-background */
+        z-index: 1100;
+        
+        .modal-page-header {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            .btn {
+                font-weight: 600;
+                min-width: 30px;
+                height: 30px;
+            }
+        }
+
+        .modal-page-body {
+            position: absolute;
+            top: 30px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            background: #fff;
+            padding: 15px;
+            /* enables scrolling for tall modals */
+            overflow: auto;
+        }
+    }
+    
+    .modal-page.sidebar-hidden {
+        margin-left: -240px;;
+    }
+}
+
+body.modal-page-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+    overflow: hidden;
+}

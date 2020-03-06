@@ -4,6 +4,7 @@ a {
 
 .nav-pills {
     border: none;
+    margin-bottom: 30px;
     text-transform: uppercase;
 }
 
@@ -24,4 +25,8 @@ a {
     border-right: none;
     color: black;
     background-color: white;
+}
+
+.negative {
+    color: red;
 }
