@@ -1,54 +1,116 @@
-<h3>FORECAST</h3>
-<hr class="mb-0">
-<ul class="nav nav-pills nav-fill mb-3" role="tablist">
-  <li class="nav-item" *ngFor="let year of years; let first = first">
-    <a class="nav-link" [href]="'#year-' + year" data-toggle="pill" role="tab" [ngClass]="{'active':first}">
-      <h4>{{ year }}</h4>
-    </a>
-  </li>
-</ul>
-
-<div class="tab-content mb-5">
-  <div *ngFor="let forecast of forecasts; let first = first" class="tab-pane" [ngClass]="{'show active':first}"
-    [id]="'year-' + forecast.year" role="tabpanel">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <h4>INCOME STATEMENT</h4>
-            <hr>
-            <h5>Revenue</h5>
-            <div class="row" *ngFor="let asset of forecast.incomeStatement.rentalBusiness.assets">
-              <label class="col-sm-8 col-form-label">{{ asset.name }}</label>
-              <label
-                class="col-sm-4 col-form-label text-right pr-4">{{ asset.revenue | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
-            </div>
-            <hr class="m-0">
-            <div class="row">
-              <label
-                class="col-sm-12 col-form-label text-right pr-4">{{ forecast.incomeStatement.rentalBusiness.revenue | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
-            </div>        
-            <div class="row">
-              <label class="col-sm-8 col-form-label"><h5>Operating Cost</h5></label>
-              <label 
-                class="col-sm-4 col-form-label text-right negative pr-4">{{ forecast.incomeStatement.rentalBusiness.operatingCost | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
-            </div>
-            <div class="row">
-              <label class="col-sm-8 col-form-label"><h5>Bank Intrest</h5></label>
-              <label 
-                class="col-sm-4 col-form-label text-right negative pr-4">{{ forecast.incomeStatement.rentalBusiness.bankIntrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
-            </div>
+<h3 class="mt-2">FORECAST</h3>
+<hr class="mb-2">
+<div class="row">
+  <div class="col" *ngFor="let forecast of forecasts">
+   <h4 class="text-center">{{ forecast.year }}</h4> 
+    <div class="card h-100">
+      <div class="card-body">
+        <h4>INCOME STATEMENT</h4>
+        <hr>
+        <h5>Revenue</h5>
+        <div class="row" *ngFor="let asset of forecast.assets">
+          <div class="col-12 p-0" *ngIf="asset.revenue > 0">
+            <label class="col-sm-8 col-form-label">{{ asset.name }}</label>
+            <label
+              class="col-sm-4 col-form-label text-right pr-4">{{ asset.revenue | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
           </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card mr-2">
-          <div class="card-body">
-            <h4>BALANCE SHEET</h4>
-            <hr>
+        <hr class="m-0">
+        <div class="row">
+          <label
+            class="col-sm-12 col-form-label text-right pr-4">{{ forecast.incomeStatement.rentalBusiness.revenue | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div> 
+        <h5>Expenses</h5>       
+        <div class="row">
+          <label class="col-sm-8 col-form-label">Operating Cost</label>
+          <label 
+            class="col-sm-4 col-form-label text-right negative pr-4">{{ forecast.incomeStatement.rentalBusiness.operatingCost | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <div class="row">
+          <label class="col-sm-8 col-form-label">Bank Intrest</label>
+          <label 
+            class="col-sm-4 col-form-label text-right negative pr-4">{{ forecast.incomeStatement.rentalBusiness.bankIntrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <div class="row">
+          <label class="col-sm-8 col-form-label">Bond Intrest</label>
+          <label 
+            class="col-sm-4 col-form-label text-right negative pr-4">{{ forecast.incomeStatement.rentalBusiness.bondIntrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-8 col-form-label">Salaries</label>
+          <div class="col-sm-4">
+            <input class="form-control text-right">
           </div>
+        </div>
+        <hr class="m-0">
+        <div class="row">
+          <label class="col-sm-8 col-form-label"><h5>Net Income Rental Business</h5></label>
+          <label
+            class="col-sm-4 col-form-label text-right pr-4" [ngClass]="{'negative':forecast.incomeStatement.rentalBusiness.netIncome < 0}">{{ forecast.incomeStatement.rentalBusiness.netIncome | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <h5 class="mt-3">Net Income Property Development</h5>
+        <div class="row" *ngFor="let asset of forecast.assets">
+          <div class="col-12 p-0" *ngIf="asset.netIncome > 0">
+          <label class="col-sm-8 col-form-label">{{ asset.name }}</label>
+          <label
+            class="col-sm-4 col-form-label text-right pr-4">{{ asset.netIncome | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+          </div>
+        </div>
+        <hr class="m-0">
+        <div class="row">
+          <label
+            class="col-sm-12 col-form-label text-right pr-4">{{ forecast.incomeStatement.propertyDevelopment.netIncome | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <div class="row">
+          <label class="col-sm-8 col-form-label"><h5>Net Income</h5></label>
+          <label
+            class="col-sm-4 col-form-label text-right pr-4" [ngClass]="{'negative':forecast.incomeStatement.netIncome < 0}"><h5>{{ forecast.incomeStatement.netIncome  | currency:'SEK':'symbol':'1.0-0':'sv' }}</h5></label>
         </div>
       </div>
     </div>
   </div>
 </div>
+<br><br>
+<div class="row">
+  <div class="col" *ngFor="let forecast of forecasts">
+    <div class="card h-100">
+      <div class="card-body">
+        <h4>BALANCE SHEET</h4>
+        <hr>
+        <h5>Assets</h5>
+        <div class="row" *ngFor="let asset of forecast.assets">
+          <label class="col-sm-8 col-form-label">{{ asset.name }}</label>
+          <label
+            class="col-sm-4 col-form-label text-right pr-4">{{ asset.value | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <hr class="m-0">
+        <div class="row">
+          <label
+            class="col-sm-12 col-form-label text-right pr-4">{{ forecast.balanceSheet.assets | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>  
+        <h5>Liabilities</h5>
+        <div class="row">
+          <label class="col-sm-8 col-form-label">Bank Loan</label>
+          <label
+            class="col-sm-4 col-form-label text-right pr-4">{{ forecast.balanceSheet.bankLoan | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <div class="row">
+          <label class="col-sm-8 col-form-label">Bonds</label>
+          <label
+            class="col-sm-4 col-form-label text-right pr-4">{{ forecast.balanceSheet.bonds | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div> 
+        <div class="row">
+          <label class="col-sm-8 col-form-label">Equity</label>
+          <label
+            class="col-sm-4 col-form-label text-right pr-4">{{ forecast.balanceSheet.equity | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+        <hr class="m-0">
+        <div class="row">
+          <label
+            class="col-sm-12 col-form-label text-right pr-4">{{ forecast.balanceSheet.assets | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>

@@ -31,49 +31,46 @@
           <div class="col">
             <div class="row">
               <div class="col">
-                <div class="form-group">
-                  <h5>Total Investment</h5>
-                  <div class="input-group mb-2 mr-sm-2">
-                    <label class="form-control text-right">{{ this.investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
-                    <div class="input-group-apend">
-                      <button type="button" class="btn btn-light" data-toggle="modal" data-target="#add-investment-modal"><span class="fas fa-edit"></span></button>
-                    </div>
-                  </div>
-                </div>                
+                <h5>Financing</h5>
+                <hr>
               </div>
-     
-                <div class="col">
-                  <div class="form-group">
-                    <h5>Bank Loan</h5>
-                    <input class="form-control text-right" name="bankLoan" [(ngModel)]="bankLoan"
-                      (keyup)="bankLoanChange(bankLoan)">
+            </div>
+            <div class="row">
+              <div class="col pr-0">
+                  <label>Total Investment</label>
+                  <br>
+                  <label class="w-100 p-2">{{ this.investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+              </div>
+                <div class="col pl-0 pr-0">
+                  <label>Bank Loan</label>
+                  <br>
+                  <label class="border-left rounded-left border-top border-bottom w-100 p-2">{{ this.investment.bankLoan | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+                </div>
+                <div class="col pl-0 pr-0">
+                    <label>Corporate Bond</label>
+                    <br>
+                    <label class="border-top border-bottom w-100 p-2">{{ this.investment.bond | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
                   </div>
+                <div class="col pl-0 pr-0">
+                    <label>Equity</label>
+                    <br>
+                    <label class="border-top border-bottom w-100 p-2">{{ this.investment.equity | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+                </div>
+                <div class="col-auto p-0 m-0">
+                  <button type="button" class="btn btn-light btn-edit" data-toggle="modal" data-target="#add-investment-modal"><span class="fas fa-edit"></span></button>
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <h5>Corporate Bond</h5>
-                    <input class="form-control text-right" name="bond" [(ngModel)]="bond" (keyup)="bondChange(bond)">
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group">
-                    <h5>Equity</h5>
-                    <input class="form-control text-right" name="equity" [(ngModel)]="equity"
-                      (keyup)="equityChange(equity)">
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group">
-                    <h5>Bank Intrest Rate (%)</h5>
+                    <label>Bank Intrest Rate (%)</label>
                     <input class="form-control text-right" name="bankIntrestRate" [(ngModel)]="bankIntrestRate"
-                      (keyup)="bankIntrestRateChange(bankIntrestRate)">
+                      (keyup)="bankIntrestRateChange(bankIntrestRate)" (focusout)="addFraction('bankIntrestRate')">
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <h5>Bond Intrest Rate (%)</h5>
+                    <label>Bond Intrest Rate (%)</label>
                     <input class="form-control text-right" name="bondIntrestRate" [(ngModel)]="bondIntrestRate"
-                      (keyup)="bondIntrestRateChange(bondIntrestRate)">
+                      (keyup)="bondIntrestRateChange(bondIntrestRate)" (focusout)="addFraction('bondIntrestRate')">
                   </div>
                 </div>
         
@@ -96,34 +93,34 @@
               </div>
             </div>            
             <div class="form-group row">
-              <label class="col-sm-8 col-form-label">Start Date</label>
-              <div class="col-sm-4">
+              <label class="col-sm-7 col-form-label">Start Date</label>
+              <div class="col-sm-5">
                 <input type="month" class="form-control text-right" name="investment.propertyDevelopment.startDate" [(ngModel)]="investment.propertyDevelopment.startDate" (change)="dateChange()">
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-8 col-form-label">End Date</label>
-              <div class="col-sm-4">
+              <label class="col-sm-7 col-form-label">End Date</label>
+              <div class="col-sm-5">
                 <input type="month" class="form-control text-right" name="investment.propertyDevelopment.endDate" [(ngModel)]="investment.propertyDevelopment.endDate" (change)="dateChange()">
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-8 col-form-label">Sales Price</label>
-              <div class="col-sm-4">
+              <label class="col-sm-7 col-form-label">Sales Price</label>
+              <div class="col-sm-5">
                 <input class="form-control text-right" name="salesPrice"
                   [disabled]="!this.investment.hasPropertyDevelopment" [(ngModel)]="salesPrice"
                   (keyup)="salesPriceChange(salesPrice)">
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-8 col-form-label">Total Investment</label>
+              <label class="col-sm-7 col-form-label">Total Investment</label>
               <label *ngIf="salesPrice"
-                class="col-sm-4 col-form-label text-right negative pr-4">{{ investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+                class="col-sm-5 col-form-label text-right negative pr-4">{{ investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
             </div>
             <div class="form-group row" style="margin-top: 85px;">
-              <label class="col-sm-8 col-form-label">Intrest</label>
+              <label class="col-sm-7 col-form-label">Intrest</label>
               <label
-                class="col-sm-4 col-form-label text-right negative pr-4">{{ investment.propertyDevelopment.intrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+                class="col-sm-5 col-form-label text-right negative pr-4">{{ investment.propertyDevelopment.intrest | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
             </div>
             <hr>
             <div class="form-group row">
@@ -242,48 +239,81 @@
 
 <!-- Modal -->
 <div class="modal fade" id="add-investment-modal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4>Investments</h4>
+        <h4>Financing</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-5">
-            <input type="month" class="form-control" name="addInvestmentDate" [(ngModel)]="addInvestmentDate">
+          <div class="col-3">
+            <h5>Month</h5>
           </div>
-          <div class="col-5">
-            <input class="form-control" name="addInvestmentAmount" [(ngModel)]="addInvestmentAmount" placeholder="Amount..."
-                    (keyup)="addInvestmentAmountChange(addInvestmentAmount)">
+          <div class="col-3">
+            <h5>Bank Loan</h5>
+          </div>
+          <div class="col-3">
+            <h5>Bond</h5>
           </div>
           <div class="col-2">
-            <button type="button" class="btn" (click)="addInvestment()"><span class="fas fa-plus"></span></button>
+            <h5>Equity</h5>
+          </div>
+          <div class="col-1">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <input type="month" class="form-control" name="financing.month" [(ngModel)]="financing.month">
+          </div>
+          <div class="col-3">
+            <input class="form-control" name="financing.bankLoan" [(ngModel)]="financing.bankLoan" placeholder="Bank Loan..." (keyup)="bankLoanChange(financing.bankLoan)">
+          </div>
+          <div class="col-3">
+            <input class="form-control" name="financing.bond" [(ngModel)]="financing.bond" placeholder="Bond..." (keyup)="bondChange(financing.bond)">
+          </div>
+          <div class="col-2">
+            <input class="form-control" name="financing.equity" [(ngModel)]="financing.equity" placeholder="Equity..." (keyup)="equityChange(financing.equity)">
+          </div>
+          <div class="col-1">
+            <button type="button" class="btn" (click)="addFinancing(financing)"><span class="fas fa-plus"></span></button>
           </div>
         </div>
         <hr>
-        <div class="row" *ngFor="let inv of investment.investments">
-          <div class="col-5">
-            <label class="p-2">{{ inv.date }}</label>
+        <div class="row" *ngFor="let fin of investment.financing">
+          <div class="col-3">
+            <label class="p-2">{{ fin.month }}</label>
           </div>
-          <div class="col-5">
-            <label class="p-2">{{ inv.amount | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+          <div class="col-3">
+            <label class="p-2">{{ fin.bankLoan | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+          </div>
+          <div class="col-3">
+            <label class="p-2">{{ fin.bond | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
           </div>
           <div class="col-2">
-            <button type="button" class="btn" (click)="removeInvestment(inv)"><span class="fas fa-trash"></span></button>
+            <label class="p-2">{{ fin.equity | currency:'SEK':'symbol':'1.0-0':'sv' }}</label>
+          </div>
+          <div class="col-1">
+            <button type="button" class="btn" (click)="removeFinancing(fin)"><span class="fas fa-trash"></span></button>
           </div>
         </div>
         <hr>
         <div class="row">
-          <div class="col-5">
-            
+          <div class="col-3">
+            <label class="p-2">Total</label>
           </div>
-          <div class="col-5">
-            <label class="p-2"><b>{{ investment.totalInvestment | currency:'SEK':'symbol':'1.0-0':'sv' }}</b></label>
+          <div class="col-3">
+            <label class="p-2"><b>{{ investment.bankLoan | currency:'SEK':'symbol':'1.0-0':'sv' }}</b></label>
+          </div>
+          <div class="col-3">
+            <label class="p-2"><b>{{ investment.bond | currency:'SEK':'symbol':'1.0-0':'sv' }}</b></label>
           </div>
           <div class="col-2">
+            <label class="p-2"><b>{{ investment.equity | currency:'SEK':'symbol':'1.0-0':'sv' }}</b></label>
+          </div>
+          <div class="col-1">
           </div>
         </div>
       </div>

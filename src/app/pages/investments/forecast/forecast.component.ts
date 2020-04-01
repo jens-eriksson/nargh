@@ -14,9 +14,9 @@ export class ForecastComponent implements OnInit {
 
   ngOnInit() {
     this.investmentProvider.all('name', 'asc').subscribe(investments => {
-      this.forecasts = this.investmentProvider.calculateForecast(investments.filter(i => i.isFavourite));      
+      this.forecasts = this.investmentProvider.calculateForecast(investments.filter(i => i.isFavourite));
       this.years = [];
-      for(let forecast of this.forecasts) {
+      for (const forecast of this.forecasts) {
         this.years.push(forecast.year);
       }
     });

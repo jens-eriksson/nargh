@@ -13,8 +13,17 @@ export class InvestmentPage implements OnInit {
   id: string;
   investment: Investment = new Investment();
   timespan: string;
-  addInvestmentAmount: string;
-  addInvestmentDate: string;
+  financing: {
+    month: string,
+    bankLoan: string,
+    bond: string,
+    equity: string
+  } = {
+    month: null,
+    bankLoan: null,
+    bond: null,
+    equity: null
+  };
   bankLoan: string;
   bond: string;
   equity: string;
@@ -40,7 +49,9 @@ export class InvestmentPage implements OnInit {
         this.bankLoan = this.toNumberString(investment.bankLoan);
         this.bond = this.toNumberString(investment.bond);
         this.bankIntrestRate = this.toNumberString(investment.bankIntrestRate);
+        this.addFraction('bankIntrestRate');
         this.bondIntrestRate = this.toNumberString(investment.bondIntrestRate);
+        this.addFraction('bondIntrestRate');
         this.salesPrice = this.toNumberString(investment.propertyDevelopment.salesPrice);
         this.revenue = this.toNumberString(investment.rentalBusiness.revenue);
         this.operatingCost = this.toNumberString(investment.rentalBusiness.operatingCost);
@@ -48,26 +59,37 @@ export class InvestmentPage implements OnInit {
     }
   }
 
-  addInvestment() {
-    if(this.addInvestmentAmount && this.addInvestmentDate) {
-      this.investment.investments.push({
-        date: this.addInvestmentDate,
-        amount: this.toNumber(this.addInvestmentAmount)
+  addFinancing(financing) {
+    if (financing.month && (financing.bankLoan || financing.bond || financing.equity)) {
+      const f = {
+        month: financing.month,
+        bankLoan: this.toNumber(financing.bankLoan),
+        bond: this.toNumber(financing.bond),
+        equity: this.toNumber(financing.equity)
+      };
+      this.investment.financing.push(f);
+      this.investment.financing.sort((a, b) => {
+        if ( a.month < b.month ) {
+          return -1;
+        }
+        if ( a.month > b.month ) {
+          return 1;
+        }
+        return 0;
       });
-
-      this.investment.totalInvestment = 0;
-      for(let inv of this.investment.investments) {
-        this.investment.totalInvestment += inv.amount;
-      }
+      this.investment.calculate();
     }
+    this.financing = {
+      month: null,
+      bankLoan: null,
+      bond: null,
+      equity: null
+    };
   }
 
-  removeInvestment(selected) {
-    this.investment.investments = this.investment.investments.filter(i => i.date !== selected.date || i.amount !== selected.amount);
-    this.investment.totalInvestment = 0;
-      for(let inv of this.investment.investments) {
-        this.investment.totalInvestment += inv.amount;
-      }
+  removeFinancing(financing) {
+    this.investment.financing = this.investment.financing.filter(f => !this.isEqual(f, financing));
+    this.investment.calculate();
   }
 
   saveAndClose(form: NgForm) {
@@ -91,27 +113,16 @@ export class InvestmentPage implements OnInit {
     this.investment.calculate();
   }
 
-  addInvestmentAmountChange(amount) {
-    amount = this.toNumber(amount);
-    this.addInvestmentAmount = this.toNumberString(amount);
-  }
-
   bankLoanChange(bankLoan) {
-    this.investment.bankLoan = this.toNumber(bankLoan);
-    this.bankLoan = this.toNumberString(this.investment.bankLoan);
-    this.investment.calculate();
+    this.financing.bankLoan = this.toNumberString(this.toNumber(bankLoan));
   }
 
   bondChange(bond) {
-    this.investment.bond = this.toNumber(bond);
-    this.bond = this.toNumberString(this.investment.bond);
-    this.investment.calculate();
+    this.financing.bond = this.toNumberString(this.toNumber(bond));
   }
 
   equityChange(equity) {
-    this.investment.equity = this.toNumber(equity);
-    this.equity = this.toNumberString(this.investment.equity);
-    this.investment.calculate();
+    this.financing.equity = this.toNumberString(this.toNumber(equity));
   }
 
   bankIntrestRateChange(bankIntrestRate) {
@@ -170,13 +181,22 @@ export class InvestmentPage implements OnInit {
   }
 
   dateChange() {
+    console.log(this.investment);
     this.investment.calculate();
+  }
+
+  addFraction(prop: string) {
+    const x = this[prop].split('.');
+    const x1 = x[0];
+    let x2 = x.length > 1 ? '.' + x[1] : '.00';
+    x2 = x2.length === 2 ? x2 + '0' : x2;
+    this[prop] = x1 + x2;
   }
 
   private toNumberString(n: number): string {
     try {
       if (n === 0) {
-        return null;
+        return '0';
       }
       const nStr = n.toString();
       const x = nStr.split('.');
@@ -198,7 +218,23 @@ export class InvestmentPage implements OnInit {
       nStr = nStr.replace(',', '.');
       return Number(nStr);
     } catch {
-      return null;
+      return 0;
     }
+  }
+
+  private isEqual(a, b) {
+      const aProps = Object.getOwnPropertyNames(a);
+      const bProps = Object.getOwnPropertyNames(b);
+
+      if (aProps.length !== bProps.length) {
+          return false;
+      }
+
+      for (const prop of aProps) {
+          if (a[prop] !== b[prop]) {
+              return false;
+          }
+      }
+      return true;
   }
 }
