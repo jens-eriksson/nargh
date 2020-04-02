@@ -1,4 +1,5 @@
-import { LayoutProvider } from './providers/layout.provider';
+import { ForecastProvider } from './providers/forecast.provider';
+import { UtilProvider } from './providers/util.provider';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -33,6 +34,8 @@ import { UserProfileProvider } from './providers/user-profile.provider';
 import { InvestmentProvider } from './providers/investment.provider';
 import { ChartProvider } from './providers/chart.provider';
 import { ModalPageProvider } from './providers/modal-page.provider';
+import { SalaryProvider } from './providers/salary.provider';
+import { LayoutProvider } from './providers/layout.provider';
 
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
@@ -86,10 +89,13 @@ registerLocaleData(localeSv, 'sv');
     AuthenticationProvider,
     AccessGuardProvider,
     UserProfileProvider,
+    SalaryProvider,
     InvestmentProvider,
     ChartProvider,
     ModalPageProvider,
-    LayoutProvider
+    LayoutProvider,
+    UtilProvider,
+    ForecastProvider
   ],
   entryComponents: [
     EditUserModal,

@@ -39,7 +39,7 @@
         <div class="form-group row">
           <label class="col-sm-8 col-form-label">Salaries</label>
           <div class="col-sm-4">
-            <input class="form-control text-right">
+            <input class="form-control text-right negative" [(ngModel)]="forecast.incomeStatement.rentalBusiness.salaries" (change)="salaryChange(forecast)">
           </div>
         </div>
         <hr class="m-0">

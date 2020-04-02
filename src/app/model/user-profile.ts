@@ -5,4 +5,3 @@ export interface UserProfile {
     phone: string;
     role: string;
 }
-

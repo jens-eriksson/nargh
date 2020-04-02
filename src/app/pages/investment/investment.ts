@@ -181,7 +181,6 @@ export class InvestmentPage implements OnInit {
   }
 
   dateChange() {
-    console.log(this.investment);
     this.investment.calculate();
   }
 

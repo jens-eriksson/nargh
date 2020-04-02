@@ -29,41 +29,60 @@ export class BondChartComponent implements OnInit {
   ngOnInit() {}
 
   private drawChart() {
-    let data = [];
-    const header = [];
-    const months = this.getMonths(this.investments);
-    header.push('Month');
-    for (const inv of this.investments) {
-      header.push(inv.name);
-    }
-    header.push({ role: 'annotation' });
-    header.push('Ack');
+    let bondData = [];
+    const bondHeader = [];
+    let intrestData = [];
+    const intrestHeader = [];
 
-    data.push(header);
+    bondHeader.push('Month');
+    for (const inv of this.investments) {
+      bondHeader.push(inv.name);
+    }
+    bondHeader.push({ role: 'annotation' });
+    bondHeader.push('Ack');
+    bondData.push(bondHeader);
+
+    intrestHeader.push('Month');
+    intrestHeader.push('Bond Intrest');
+    intrestHeader.push({ role: 'annotation' });
+    intrestData.push(intrestHeader);
+
     let ack = 0;
+    let intrest = 0;
+    const months = this.getMonths(this.investments);
     for (const month of months) {
-      const row = [month];
+      const bondRow = [month];
+      const intrestRow = [month];
       let total = 0;
+
       for (const inv of this.investments) {
         let amount = 0;
         for (const fin of inv.financing) {
           if (fin.month === month) {
             amount += fin.bond;
+            intrest += fin.bond * inv.bondIntrestRate / 100 / 12;
           }
+        }
+        if (inv.hasPropertyDevelopment && inv.propertyDevelopment.endDate === month && inv.propertyDevelopment.salesPrice > 0) {
+          amount -= inv.bond;
+          intrest -= inv.bond * inv.bondIntrestRate / 100 / 12;
         }
         amount = Math.round(amount);
         ack += amount;
         total += amount;
-        row.push(amount);
+        bondRow.push(amount);
       }
-      row.push(total);
-      row.push(ack);
-      data.push(row);
+      intrestRow.push(Math.round(intrest));
+      intrestRow.push(Math.round(intrest));
+      intrestData.push(intrestRow);
+      bondRow.push(total);
+      bondRow.push(ack);
+      bondData.push(bondRow);
     }
-    const colNumber = (header.length - 3).toString();
-    data = this.google.visualization.arrayToDataTable(data);
+    const colNumber = (bondHeader.length - 3).toString();
+    bondData = this.google.visualization.arrayToDataTable(bondData);
 
-    const options = {
+    const bondOptions = {
       height: 500,
       isStacked: true,
       legend: { position: 'top', maxLines: 3 },
@@ -75,16 +94,36 @@ export class BondChartComponent implements OnInit {
         slantedTextAngle: 60
       }
     };
-    options.series[colNumber] = {
+    bondOptions.series[colNumber] = {
       type: 'line'
     };
-    const chart = new this.google.visualization.ComboChart(
+
+    const bondChart = new this.google.visualization.ComboChart(
       document.getElementById('bonds')
     );
-/*     const chart = new this.google.visualization.ColumnChart(
-      document.getElementById('bonds')
-    ); */
-    chart.draw(data, options);
+
+    bondChart.draw(bondData, bondOptions);
+
+    intrestData = this.google.visualization.arrayToDataTable(intrestData);
+
+    const intrestOptions = {
+      height: 500,
+      isStacked: true,
+      legend: { position: 'top', maxLines: 3 },
+      annotations: { alwaysOutside: true, highContrast: true },
+      seriesType: 'bars',
+      series: {},
+      hAxis: {
+        slantedText: true,
+        slantedTextAngle: 60
+      }
+    };
+
+    const intrestChart = new this.google.visualization.ColumnChart(
+      document.getElementById('intrest')
+    );
+
+    intrestChart.draw(intrestData, intrestOptions);
   }
 
   private getMonths(investments: IInvestment[]) {
