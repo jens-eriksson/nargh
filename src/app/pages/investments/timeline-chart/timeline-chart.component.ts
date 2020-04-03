@@ -1,4 +1,4 @@
-import { IInvestment } from './../../../model/investment';
+import { Investment } from './../../../model/investment';
 import { InvestmentProvider } from './../../../providers/investment.provider';
 import { ChartProvider } from './../../../providers/chart.provider';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimelineChartComponent implements OnInit {
   private google;
-  investments: IInvestment[];
+  investments: Investment[];
 
   constructor(
     private chartProvider: ChartProvider,
@@ -21,7 +21,9 @@ export class TimelineChartComponent implements OnInit {
 
       this.investmentProvider.all('name', 'asc').subscribe(investments => {
         this.investments = investments.filter(i => i.isFavourite && i.hasPropertyDevelopment);
-        this.google.charts.setOnLoadCallback(this.drawChart.bind(this));
+        if (this.investments.length > 0) {
+          this.google.charts.setOnLoadCallback(this.drawChart.bind(this));
+        }
       });
   }
 

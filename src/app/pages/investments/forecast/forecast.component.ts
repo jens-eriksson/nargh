@@ -23,16 +23,16 @@ export class ForecastComponent implements OnInit {
     private util: UtilProvider) { }
 
   ngOnInit() {
+    this.forecastProvider.all().subscribe(forecasts => {
+      this.forecasts = forecasts;
+    });
 
     this.investmentProvider.all('name', 'asc').subscribe(investments => {
       this.investments = investments.filter(i => i.isFavourite);
-      this.forecastProvider.all().subscribe(forecasts => {
-        this.forecasts = forecasts;
-        for (const forecast of this.forecasts) {
-          this.forecastProvider.update(forecast, this.investments);
-          this.forecastProvider.set(forecast);
-        }
-      });
+      for (const forecast of this.forecasts) {
+        this.forecastProvider.update(forecast, this.investments);
+        this.forecastProvider.set(forecast);
+      }
     });
   }
 

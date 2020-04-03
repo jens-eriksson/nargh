@@ -1,6 +1,6 @@
 import { ModalPageProvider } from './../../../providers/modal-page.provider';
 import { Component, OnInit, Input } from '@angular/core';
-import { IInvestment } from 'src/app/model/investment';
+import { Investment } from 'src/app/model/investment';
 import { InvestmentProvider } from 'src/app/providers/investment.provider';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { InvestmentPage } from '../../investment/investment';
@@ -11,7 +11,7 @@ import { InvestmentPage } from '../../investment/investment';
   styleUrls: ['./tiles.component.scss']
 })
 export class TilesComponent implements OnInit {
-  investments: IInvestment[];
+  investments: Investment[];
   modalRef: BsModalRef;
   deleteId: string = null;
 
@@ -27,7 +27,7 @@ export class TilesComponent implements OnInit {
     });
   }
 
-  toogleFavourite(inv: IInvestment) {
+  toogleFavourite(inv: Investment) {
     inv.isFavourite = !inv.isFavourite;
     this.investmentProvider.set(inv);
   }

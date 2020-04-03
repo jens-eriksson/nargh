@@ -1,8 +1,10 @@
+import { Observable } from 'rxjs';
 import { ModalPageProvider } from '../../providers/modal-page.provider';
 import { InvestmentProvider } from '../../providers/investment.provider';
 import { Investment } from '../../model/investment';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-investment',
@@ -36,7 +38,8 @@ export class InvestmentPage implements OnInit {
 
   constructor(
     private investmentProvider: InvestmentProvider,
-    private modalPageProvider: ModalPageProvider
+    private modalPageProvider: ModalPageProvider,
+    private storeage: AngularFireStorage,
     ) {
   }
 
@@ -98,6 +101,32 @@ export class InvestmentPage implements OnInit {
       this.investmentProvider.set(this.investment.toObject()).then(() => {
         this.modalPageProvider.close();
       });
+    }
+  }
+
+  uploadImages(files) {
+    for (const file of files) {
+      const task = this.storeage.upload('images/' + file.name, file)
+        .then(t => {
+          console.log();
+          t.ref.getDownloadURL().then(url => {
+            const image = { url: url, name: t.metadata.name, fullPath: t.metadata.fullPath };
+            this.investment.images.push(image);
+            this.investmentProvider.set(this.investment);
+          });
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    }
+  }
+
+  deleteImage(image) {
+    const index = this.investment.images.findIndex(i => i.name === image.name);
+    if (index >= 0) {
+      this.investment.images.splice(index);
+      this.investmentProvider.set(this.investment);
+      this.storeage.ref(image.fullPath).delete();
     }
   }
 

@@ -2,7 +2,7 @@ import { ModalPageProvider } from './../../../providers/modal-page.provider';
 import { WhereCondition } from './../../../model/where-condition';
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { IInvestment } from 'src/app/model/investment';
+import { Investment } from 'src/app/model/investment';
 import { InvestmentProvider } from 'src/app/providers/investment.provider';
 import { InvestmentPage } from '../../investment/investment';
 
@@ -15,7 +15,7 @@ export class TableComponent implements OnInit {
   private readonly SORT_KEY = 'investments.table.sort';
   private readonly FILTER_KEY = 'investments.table.filter';
   subscription;
-  investments: IInvestment[];
+  investments: Investment[];
   modalRef: BsModalRef;
   deleteId: string = null;
   showNonNav: boolean;
@@ -30,7 +30,7 @@ export class TableComponent implements OnInit {
     this.data();
   }
 
-  toogleFavourite(inv: IInvestment) {
+  toogleFavourite(inv: Investment) {
     inv.isFavourite = !inv.isFavourite;
     this.investmentProvider.set(inv);
     this.data();

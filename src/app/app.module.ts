@@ -1,5 +1,3 @@
-import { ForecastProvider } from './providers/forecast.provider';
-import { UtilProvider } from './providers/util.provider';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -7,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { EditorModule } from '@tinymce/tinymce-angular';
@@ -36,6 +35,8 @@ import { ChartProvider } from './providers/chart.provider';
 import { ModalPageProvider } from './providers/modal-page.provider';
 import { SalaryProvider } from './providers/salary.provider';
 import { LayoutProvider } from './providers/layout.provider';
+import { ForecastProvider } from './providers/forecast.provider';
+import { UtilProvider } from './providers/util.provider';
 
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
@@ -80,6 +81,7 @@ registerLocaleData(localeSv, 'sv');
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireStorageModule,
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     BrowserAnimationsModule,

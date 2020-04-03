@@ -2,7 +2,7 @@ import { UtilProvider } from './util.provider';
 import { Forecast } from './../model/forecast';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { IInvestment } from '../model/investment';
+import { Investment } from '../model/investment';
 import { Asset } from '../model/asset';
 import { Observable } from 'rxjs';
 
@@ -35,7 +35,7 @@ export class ForecastProvider {
         return this.db.collection(this.COLLECTION).doc<Forecast>(year.toString()).delete();
     }
 
-    public update(forecast: Forecast, investments: IInvestment[]): Forecast {
+    public update(forecast: Forecast, investments: Investment[]): Forecast {
         const startMonth = forecast.year * 12;
         const endMonth = forecast.year * 12 + 11;
         forecast.assets = [];
@@ -123,7 +123,7 @@ export class ForecastProvider {
         return forecast;
     }
 
-    public create(year: number, salary: number, investments: IInvestment[]): Forecast {
+    public create(year: number, salary: number, investments: Investment[]): Forecast {
         const forecast = new Forecast();
         forecast.year = year;
         forecast.incomeStatement.rentalBusiness.salaries = salary;

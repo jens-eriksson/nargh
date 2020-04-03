@@ -1,4 +1,4 @@
-export interface IInvestment {
+export class Investment {
     id: string;
     name: string;
     description: string;
@@ -35,45 +35,11 @@ export interface IInvestment {
         returnOnInvestment: number;
         returnOnEquity: number;
     };
-}
-
-export class Investment implements IInvestment {
-    id: string;
-    name: string;
-    description: string;
-    financing: any[];
-    totalInvestment: number;
-    bankLoan: number;
-    bond: number;
-    equity: number;
-    bankIntrestRate: number;
-    bondIntrestRate: number;
-    currency: string;
-    hasPropertyDevelopment: boolean;
-    hasRentalBusiness: boolean;
-    isFavourite: boolean;
-    propertyDevelopment: {
-        startDate: string;
-        endDate: string;
-        timespan: number;
-        salesPrice: number;
-        intrest: number;
-        netIncome: number;
-        netIncomePerMonth: number;
-        returnOnInvestment: number;
-        returnOnEquity: number;
-    };
-    rentalBusiness: {
-        startDate: string;
-        endDate: string;
-        timespan: number;
-        revenue: number;
-        operatingCost: number;
-        intrest: number;
-        netIncome: number;
-        returnOnInvestment: number;
-        returnOnEquity: number;
-    };
+    images: {
+        name: string;
+        url: string;
+        fullPath: string;
+    }[];
 
     constructor() {
         this.id = null;
@@ -112,6 +78,7 @@ export class Investment implements IInvestment {
             returnOnInvestment: null,
             returnOnEquity: null
         };
+        this.images = [];
     }
 
     calculate() {
@@ -156,7 +123,6 @@ export class Investment implements IInvestment {
             this.hasRentalBusiness &&
             this.rentalBusiness.revenue &&
             this.rentalBusiness.operatingCost &&
-            this.bankIntrestRate &&
             this.totalInvestment
         ) {
             this.rentalBusiness.netIncome = this.rentalBusiness.revenue - this.rentalBusiness.operatingCost - this.rentalBusiness.intrest;
@@ -168,8 +134,6 @@ export class Investment implements IInvestment {
             this.rentalBusiness.netIncome = null;
             this.rentalBusiness.returnOnInvestment = null;
             this.rentalBusiness.returnOnEquity = null;
-            this.rentalBusiness.startDate = null;
-            this.rentalBusiness.endDate = null;
         }
     }
 
@@ -188,14 +152,12 @@ export class Investment implements IInvestment {
         }
     }
 
-    toObject(): IInvestment {
+    toObject() {
         return { ...this };
     }
 
-    fromObject(obj: IInvestment) {
-        for (const key in obj) {
-            this[key] = obj[key];
-        }
+    fromObject(obj) {
+        Object.assign(this, obj);
     }
 
     private calculateTimespan() {

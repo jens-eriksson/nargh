@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IInvestment } from '../model/investment';
+import { Investment } from '../model/investment';
 
 declare var google: any;
 
@@ -26,7 +26,7 @@ export class UtilProvider {
         return year + '-' + monthStr;
     }
 
-    public getBondAmount(investment: IInvestment, month: string) {
+    public getBondAmount(investment: Investment, month: string) {
         if (!month) {
           return 0;
         }
@@ -46,7 +46,7 @@ export class UtilProvider {
         return amount;
     }
 
-    public getBankLoanAmount(investment: IInvestment, month: string) {
+    public getBankLoanAmount(investment: Investment, month: string) {
         if (!month) {
           return 0;
         }
@@ -66,7 +66,7 @@ export class UtilProvider {
         return amount;
     }
 
-    public getEquityAmount(investment: IInvestment, month: string) {
+    public getEquityAmount(investment: Investment, month: string) {
         if (!month) {
             return 0;
         }

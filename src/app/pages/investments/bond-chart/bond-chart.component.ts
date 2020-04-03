@@ -1,4 +1,4 @@
-import { IInvestment } from '../../../model/investment';
+import { Investment } from './../../../model/investment';
 import { InvestmentProvider } from '../../../providers/investment.provider';
 import { ChartProvider } from '../../../providers/chart.provider';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BondChartComponent implements OnInit {
   private google;
-  investments: IInvestment[];
+  investments: Investment[];
   data;
 
   constructor(
@@ -126,7 +126,7 @@ export class BondChartComponent implements OnInit {
     intrestChart.draw(intrestData, intrestOptions);
   }
 
-  private getMonths(investments: IInvestment[]) {
+  private getMonths(investments: Investment[]) {
     let months = [];
     for (const inv of investments) {
       if (inv.propertyDevelopment.startDate) {

@@ -220,12 +220,23 @@
                 plugins: 'lists advlist',
                 toolbar: 'undo redo | bold italic | bullist numlist outdent indent'
               }" name="investment.description" [(ngModel)]="investment.description" placeholder="Description..."
-                class="description"></editor>
+                class="description h-100"></editor>
             </div>
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="images" role="tabpanel">...</div>
+      <div class="tab-pane fade" id="images" role="tabpanel">
+        <div class="custom-file">
+          <input type="file" accept="image/*" class="custom-file-input" id="customFile" (change)="uploadImages($event.target.files)">
+          <label class="custom-file-label" for="customFile">Choose files...</label>
+        </div>
+        <div class="row mt-3" >
+          <div class="col-auto text-center" *ngFor="let image of investment.images">
+            <img [src]="image.url" class="img-fluid" /><br>
+            <button type="button" class="btn" (click)="deleteImage(image)"><span class="far fa-trash-alt"></span></button>
+          </div>
+        </div>
+      </div>
       <div class="tab-pane fade" id="documents" role="tabpanel">
       </div>
     </div>
