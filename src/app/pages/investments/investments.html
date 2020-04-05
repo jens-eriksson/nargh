@@ -6,16 +6,29 @@
     </button>
   </div>
   <div class="col text-right mt-3">
+    <div class="custom-control custom-radio custom-control-inline mr-5 mt-2">
+      <label class="switch">
+        <input type="checkbox" (change)="filter()" name="showOnlyFavourites" [(ngModel)]="!showOnlyFavourites">
+        <span class="slider round"></span>
+      </label>
+      <h4 style="margin-top: -4px;"><span class="far fa-heart ml-2"></span></h4>
+    </div>
+    
     <button class="btn" (click)="toggleView('table')" [ngClass]="{'view-selected':view === 'table'}"><span class="fas fa-th-list"></span></button>
     <button class="btn" (click)="toggleView('tiles')" [ngClass]="{'view-selected':view === 'tiles'}"><span class="fas fa-th-large"></span></button>
   </div>
   <div class="col-auto m-0">
   </div>
 </div>
+<div class="row">
+  <div class="col">
+    
+  </div>
+</div>
 <hr>
 
-<app-tiles *ngIf="view === 'tiles'"></app-tiles>
-<app-table *ngIf="view === 'table'"></app-table>
+<app-tiles *ngIf="view === 'tiles'" [investments]="investments" (refresh)="getData($event)"></app-tiles>
+<app-table *ngIf="view === 'table'" [investments]="investments" (refresh)="getData($event)"></app-table>
 <app-forecast></app-forecast>
 <app-bond-chart></app-bond-chart>
 <app-timeline-chart></app-timeline-chart>

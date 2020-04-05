@@ -143,12 +143,13 @@ export class Investment {
             this.name
         ) {
             this.id = this.name
+                .toLowerCase()
+                .trim()
                 .split(' ').join('-')
                 .split('å').join('a')
                 .split('ä').join('a')
                 .split('ö').join('o')
-                .toLowerCase()
-                .trim();
+                .split(':').join('-');
         }
     }
 

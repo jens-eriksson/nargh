@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-auto" *ngFor="let investment of investments">
-    <div class="card project h-100">
+    <div class="card project">
       <div class="card-header">
         <div class="row">
           <div class="col m-0" (click)="edit(investment.id)">
@@ -18,8 +18,59 @@
           </div>
         </div>
       </div>
-      <img *ngIf="investment.images && investment.images.length > 0" [src]="investment.images[0].url" class="card-img-top" alt="...">
+      <div *ngIf="investment.images && investment.images.length > 0" id="{{'carousel-' + investment.id }}" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+          <div class="carousel-item active" *ngFor="let image of investment.images; let first = first" [ngClass]="{'active':first}">
+            <img [src]="image.url" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="{{'#carousel-' + investment.id }}" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="{{'#carousel-' + investment.id }}" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
       <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td>
+                  <h6>Total Investment</h6>
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.totalInvestment
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h6>Corporate Bond</h6>
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.bond | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h6>Timespan (m)</h6>
+                </td>
+                <td class="text-right">
+                  <span *ngIf="investment.propertyDevelopment.timespan">{{ investment.propertyDevelopment.timespan }}</span>
+                  <span *ngIf="!investment.propertyDevelopment.timespan">&infin;</span>
+                </td>
+              </tr>
+            </table>
+            <hr>
+          </div>
+        </div>
         <div class="row">
           <div class="col-6" *ngIf="investment.hasPropertyDevelopment">
             <h5>Property Development</h5>
@@ -99,6 +150,17 @@
               </tr>
               <tr>
                 <td>
+                  Op. Income
+                </td>
+                <td class="text-right">
+                  {{
+                    investment.rentalBusiness.revenue - investment.rentalBusiness.operatingCost
+                      | currency: "SEK":"symbol":"1.0-0":"sv"
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>
                   Net Income
                 </td>
                 <td class="text-right">
@@ -108,56 +170,11 @@
                   }}
                 </td>
               </tr>
-              <tr>
-                <td>
-                  Net Income/m
-                </td>
-                <td class="text-right">
-                  {{
-                    investment.rentalBusiness.netIncome / 12
-                      | currency: "SEK":"symbol":"1.0-0":"sv"
-                  }}
-                </td>
-              </tr>
+              
             </table>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <hr />
-            <table class="table table-sm table-borderless">
-              <tr>
-                <td>
-                  Total Investment
-                </td>
-                <td class="text-right">
-                  {{
-                    investment.totalInvestment
-                      | currency: "SEK":"symbol":"1.0-0":"sv"
-                  }}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Equtiy
-                </td>
-                <td class="text-right">
-                  {{
-                    investment.equity | currency: "SEK":"symbol":"1.0-0":"sv"
-                  }}
-                </td>
-              </tr>
-              <tr *ngIf="investment.propertyDevelopment.timespan">
-                <td>
-                  Timespan (months)
-                </td>
-                <td class="text-right">
-                  {{ investment.propertyDevelopment.timespan }}
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { ModalPageProvider } from './../../../providers/modal-page.provider';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Investment } from 'src/app/model/investment';
 import { InvestmentProvider } from 'src/app/providers/investment.provider';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -11,7 +11,8 @@ import { InvestmentPage } from '../../investment/investment';
   styleUrls: ['./tiles.component.scss']
 })
 export class TilesComponent implements OnInit {
-  investments: Investment[];
+  @Input() investments: Investment[];
+  @Output() refresh = new EventEmitter<any>();
   modalRef: BsModalRef;
   deleteId: string = null;
 
@@ -22,14 +23,12 @@ export class TilesComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.investmentProvider.all('isFavourite', 'desc').subscribe(investments => {
-      this.investments = investments;
-    });
   }
 
   toogleFavourite(inv: Investment) {
     inv.isFavourite = !inv.isFavourite;
     this.investmentProvider.set(inv);
+    this.refresh.emit();
   }
 
   edit(id) {
